@@ -25,12 +25,10 @@ TEST(TestPreviewControlZmp, Test1)
 
   std::array<double, 3> start_pos = {0.0, 0.0, 0.0};
   std::array<double, 3> goal_pos = {1.0, 0.5, 1.0};
-  auto start_left_state =
-      planner->env_->makeStateFromMidpose(start_pos[0], start_pos[1], start_pos[2], BFP::Foot::LEFT);
-  auto start_right_state =
-      planner->env_->makeStateFromMidpose(start_pos[0], start_pos[1], start_pos[2], BFP::Foot::RIGHT);
-  auto goal_left_state = planner->env_->makeStateFromMidpose(goal_pos[0], goal_pos[1], goal_pos[2], BFP::Foot::LEFT);
-  auto goal_right_state = planner->env_->makeStateFromMidpose(goal_pos[0], goal_pos[1], goal_pos[2], BFP::Foot::RIGHT);
+  auto start_left_state = planner->env_->makeStateFromMidpose(start_pos, BFP::Foot::LEFT);
+  auto start_right_state = planner->env_->makeStateFromMidpose(start_pos, BFP::Foot::RIGHT);
+  auto goal_left_state = planner->env_->makeStateFromMidpose(goal_pos, BFP::Foot::LEFT);
+  auto goal_right_state = planner->env_->makeStateFromMidpose(goal_pos, BFP::Foot::RIGHT);
   planner->setStartGoal(start_left_state, start_right_state, goal_left_state, goal_right_state);
 
   planner->run();

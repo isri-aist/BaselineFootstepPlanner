@@ -1,7 +1,6 @@
 /* Author: Masaki Murooka */
 
 #include <algorithm>
-#include <iostream>
 
 #include <ros/console.h>
 
@@ -85,7 +84,7 @@ int FootstepEnv::GetGoalHeuristic(int id)
   return GetFromToHeuristic(id, goal_left_id_);
 }
 
-void FootstepEnv::GetSuccs(int source_id, std::vector<int> * succ_ids, std::vector<int> * costs)
+void FootstepEnv::GetSuccs(int source_id, std::vector<int> * succ_id_list, std::vector<int> * cost_list)
 {
   // treat left foot as goal
   if(source_id == goal_left_id_)
@@ -103,8 +102,8 @@ void FootstepEnv::GetSuccs(int source_id, std::vector<int> * succ_ids, std::vect
   {
     int succ_id = goal_left_id_;
     const std::shared_ptr<FootstepState> & succ_state = id_to_state_list_[succ_id];
-    succ_ids->push_back(succ_id);
-    costs->push_back(calcCost(current_state, succ_state));
+    succ_id_list->push_back(succ_id);
+    cost_list->push_back(calcCost(current_state, succ_state));
     return;
   }
   // if the source state is reachable to the goal of opposite foot,
@@ -116,17 +115,13 @@ void FootstepEnv::GetSuccs(int source_id, std::vector<int> * succ_ids, std::vect
     {
       succ_id = goal_right_id_;
     }
-    else if(current_state->foot_ == Foot::RIGHT)
+    else // if(current_state->foot_ == Foot::RIGHT)
     {
       succ_id = goal_left_id_;
     }
-    else
-    {
-      throw std::runtime_error("Invalid foot: " + std::to_string(current_state->foot_));
-    }
     const std::shared_ptr<FootstepState> & succ_state = id_to_state_list_[succ_id];
-    succ_ids->push_back(succ_id);
-    costs->push_back(calcCost(current_state, succ_state));
+    succ_id_list->push_back(succ_id);
+    cost_list->push_back(calcCost(current_state, succ_state));
     return;
   }
 
@@ -137,13 +132,9 @@ void FootstepEnv::GetSuccs(int source_id, std::vector<int> * succ_ids, std::vect
     // from the left foot to the right foot
     actions = &(l2r_theta_to_actions_[current_state->theta_]);
   }
-  else if(current_state->foot_ == Foot::RIGHT)
+  else // if(current_state->foot_ == Foot::RIGHT)
   {
     actions = &(r2l_theta_to_actions_[current_state->theta_]);
-  }
-  else
-  {
-    throw std::runtime_error("Invalid foot: " + std::to_string(current_state->foot_));
   }
 
   // apply each action
@@ -170,8 +161,8 @@ void FootstepEnv::GetSuccs(int source_id, std::vector<int> * succ_ids, std::vect
 
     // push
     int succ_id = addStateIfNotExists(succ_state);
-    succ_ids->push_back(succ_id);
-    costs->push_back(calcCost(current_state, succ_state));
+    succ_id_list->push_back(succ_id);
+    cost_list->push_back(calcCost(current_state, succ_state));
   }
 }
 
@@ -209,32 +200,6 @@ int FootstepEnv::calcCost(const std::shared_ptr<FootstepState> & current_state,
 
   return static_cast<int>(config_->cost_scale
                           * (dist_xy + config_->cost_theta_scale * dist_theta + config_->step_cost));
-}
-
-std::shared_ptr<FootstepState> FootstepEnv::makeStateFromMidpose(double cx, double cy, double ctheta, Foot foot) const
-{
-  // the offset for the nominal foot separation from right to left
-  // rotate the 2D vector (0; nominal_foot_separation / 2.0) by ctheta
-  double cx_separation_half_offset = -1 * std::sin(ctheta) * config_->nominal_foot_separation / 2.0;
-  double cy_separation_half_offset = std::cos(ctheta) * config_->nominal_foot_separation / 2.0;
-
-  int offset_sign;
-  if(foot == Foot::LEFT)
-  {
-    offset_sign = 1;
-  }
-  else if(foot == Foot::RIGHT)
-  {
-    offset_sign = -1;
-  }
-  else
-  {
-    throw std::runtime_error("Invalid foot: " + std::to_string(foot));
-  }
-
-  return std::make_shared<FootstepState>(contToDiscXy(cx + offset_sign * cx_separation_half_offset),
-                                         contToDiscXy(cy + offset_sign * cy_separation_half_offset),
-                                         contToDiscTheta(ctheta), foot);
 }
 
 bool FootstepEnv::setStart(const std::shared_ptr<FootstepState> & left_state,
@@ -461,14 +426,10 @@ bool FootstepEnv::reachableToGoal(const std::shared_ptr<FootstepState> & state)
     // from left to right
     offset_sign = -1;
   }
-  else if(state->foot_ == Foot::RIGHT)
+  else // if(state->foot_ == Foot::RIGHT)
   {
     // from right to left
     offset_sign = 1;
-  }
-  else
-  {
-    throw std::runtime_error("Invalid foot: " + std::to_string(state->foot_));
   }
 
   // next nominal state
@@ -482,13 +443,9 @@ bool FootstepEnv::reachableToGoal(const std::shared_ptr<FootstepState> & state)
   {
     goal_id = goal_right_id_;
   }
-  else if(state->foot_ == Foot::RIGHT)
+  else // if(state->foot_ == Foot::RIGHT)
   {
     goal_id = goal_left_id_;
-  }
-  else
-  {
-    throw std::runtime_error("Invalid foot: " + std::to_string(state->foot_));
   }
   const std::shared_ptr<FootstepState> & goal_state = id_to_state_list_[goal_id];
 

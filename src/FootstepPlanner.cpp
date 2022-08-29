@@ -1,9 +1,5 @@
 /* Author: Masaki Murooka */
 
-#include <chrono>
-#include <fstream>
-#include <iostream>
-
 #include <ros/console.h>
 
 #include <BaselineFootstepPlanner/FootstepPlanner.h>

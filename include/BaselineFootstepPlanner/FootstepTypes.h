@@ -22,7 +22,7 @@ using BFP::Foot;
 /** \brief Convert foot to string.
     \param foot foot
 */
-inline std::string to_string(const Foot & foot)
+inline std::string to_string(Foot foot)
 {
   if(foot == Foot::LEFT)
   {

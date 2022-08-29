@@ -28,8 +28,6 @@ add_message_files(
   Footstep2D.msg
   FootstepSequence2D.msg
   FootstepSequence2DStamped.msg
-  Transform2D.msg
-  Transform2DStamped.msg
 )
 
 generate_messages(
@@ -48,6 +46,8 @@ catkin_package(
   )
 
 add_subdirectory(src)
+
+add_subdirectory(node)
 
 if(CATKIN_ENABLE_TESTING)
   add_subdirectory(tests)

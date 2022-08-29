@@ -1,7 +1,5 @@
 /* Author: Masaki Murooka */
 
-#include <iostream>
-
 #include <ros/console.h>
 
 #include <BaselineFootstepPlanner/FootstepState.h>

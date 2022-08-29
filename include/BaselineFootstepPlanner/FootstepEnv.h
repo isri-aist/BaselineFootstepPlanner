@@ -139,12 +139,12 @@ public:
 
   /** \brief Get successor states.
       \param source_id ID of source state
-      \param succ_ids ID list of successor states
-      \param costs cost list from source state to each successor state
+      \param succ_id_list ID list of successor states
+      \param cost_list cost list from source state to each successor state
   */
-  virtual void GetSuccs(int source_id, std::vector<int> * succ_ids, std::vector<int> * costs) override;
+  virtual void GetSuccs(int source_id, std::vector<int> * succ_id_list, std::vector<int> * cost_list) override;
 
-  inline virtual void GetPreds(int target_id, std::vector<int> * prev_ids, std::vector<int> * costs) override
+  inline virtual void GetPreds(int target_id, std::vector<int> * prev_id_list, std::vector<int> * cost_list) override
   {
     throw std::runtime_error("FootstepEnv::GetPreds is not expected to be called.");
   }
@@ -224,12 +224,22 @@ public:
                const std::shared_ptr<FootstepState> & succ_state) const;
 
   /** \brief Make state from feet midpose.
-      \param cx continuous X position of feet midpose [m]
-      \param cy continuous Y position of feet midpose [m]
-      \param ctheta continuous orientation of feet midpose [rad]
+      \param midpose feet midpose (x [m], y [m], theta [rad])
       \param foot foot
   */
-  std::shared_ptr<FootstepState> makeStateFromMidpose(double cx, double cy, double ctheta, Foot foot) const;
+  template<typename ArrayType>
+  inline std::shared_ptr<FootstepState> makeStateFromMidpose(const ArrayType & midpose, Foot foot) const
+  {
+    // the offset for the nominal foot separation from right to left
+    // rotate the 2D vector (0; nominal_foot_separation / 2.0) by theta
+    double cx_separation_half_offset = -1 * std::sin(midpose[2]) * config_->nominal_foot_separation / 2.0;
+    double cy_separation_half_offset = std::cos(midpose[2]) * config_->nominal_foot_separation / 2.0;
+
+    int offset_sign = (foot == Foot::LEFT ? 1 : -1);
+    return std::make_shared<FootstepState>(contToDiscXy(midpose[0] + offset_sign * cx_separation_half_offset),
+                                           contToDiscXy(midpose[1] + offset_sign * cy_separation_half_offset),
+                                           contToDiscTheta(midpose[2]), foot);
+  }
 
   /** \brief Set start footstep.
       \param left_state state of start left footstep
@@ -256,7 +266,7 @@ public:
   void printState(const std::shared_ptr<FootstepState> & state) const;
 
   /** \brief Get the number of created states. */
-  inline int stateNum()
+  inline int stateNum() const
   {
     return id_to_state_list_.size();
   }
