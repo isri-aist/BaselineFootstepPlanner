@@ -1,0 +1,14 @@
+<launch>
+  <rosparam command="load" file="$(find baseline_footstep_planner)/config/FootstepPlanner.yaml"
+            subst_value="true" />
+
+  <node pkg="baseline_footstep_planner" type="FootstepPlannerNode" name="footstep_planner"
+        output="screen" clear_params="true" />
+
+  <node pkg="baseline_footstep_planner" type="FootstepPlannerRvizServer.py" name="footstep_planner_rviz_server"
+        output="screen" clear_params="true" />
+
+  <node pkg="rviz" type="rviz" name="$(anon rviz)"
+        args="-d $(find baseline_footstep_planner)/rviz/FootstepPlanner.rviz"
+        output="screen" clear_params="true" />
+</launch>
