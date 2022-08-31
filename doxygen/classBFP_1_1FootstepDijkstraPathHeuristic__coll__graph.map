@@ -1,0 +1,5 @@
+<map id="BFP::FootstepDijkstraPathHeuristic" name="BFP::FootstepDijkstraPathHeuristic">
+<area shape="rect" id="node1" title="Dijkstra path based heuristics for footstep planning." alt="" coords="5,171,196,212"/>
+<area shape="rect" id="node2" href="$classBFP_1_1FootstepEnv.html" title="Environment for footstep planning." alt="" coords="33,81,168,108"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,196,32"/>
+</map>
