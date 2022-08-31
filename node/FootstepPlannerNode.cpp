@@ -20,6 +20,21 @@ FootstepPlannerNode::FootstepPlannerNode()
   start_pose_sub_ =
       nh_.subscribe<geometry_msgs::Pose2D>("start_pose", 1, &FootstepPlannerNode::startPoseCallback, this);
   goal_pose_sub_ = nh_.subscribe<geometry_msgs::Pose2D>("goal_pose", 1, &FootstepPlannerNode::goalPoseCallback, this);
+
+  if(pnh_.hasParam("start_pose"))
+  {
+    std::vector<double> start_pose_vec(3);
+    pnh_.getParam("start_pose", start_pose_vec);
+    std::copy(start_pose_vec.begin(), start_pose_vec.end(), start_pose_.begin());
+  }
+  if(pnh_.hasParam("goal_pose"))
+  {
+    std::vector<double> goal_pose_vec(3);
+    pnh_.getParam("goal_pose", goal_pose_vec);
+    std::copy(goal_pose_vec.begin(), goal_pose_vec.end(), goal_pose_.begin());
+  }
+
+  setStartGoal();
 }
 
 void FootstepPlannerNode::run()

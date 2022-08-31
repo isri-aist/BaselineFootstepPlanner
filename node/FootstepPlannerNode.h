@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <cmath>
-
 #include <geometry_msgs/Pose2D.h>
 #include <ros/ros.h>
 
@@ -45,16 +43,19 @@ protected:
   std::shared_ptr<FootstepPlanner> planner_;
 
   //! Start pose
-  std::array<double, 3> start_pose_ = {std::nan(""), std::nan(""), std::nan("")};
+  std::array<double, 3> start_pose_ = {0.0, 0.0, 0.0};
 
   //! Goal pose
-  std::array<double, 3> goal_pose_ = {std::nan(""), std::nan(""), std::nan("")};
+  std::array<double, 3> goal_pose_ = {0.0, 0.0, 0.0};
 
   //! Accumulated duration for planning [sec]
   double accumulated_duration_ = 0.0;
 
   //! ROS node handle
   ros::NodeHandle nh_;
+
+  //! ROS node handle with private namespace
+  ros::NodeHandle pnh_ = ros::NodeHandle("~");
 
   //! Publisher of footstep sequence
   ros::Publisher footstep_seq_pub_;
