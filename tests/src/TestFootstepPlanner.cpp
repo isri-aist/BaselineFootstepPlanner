@@ -4,7 +4,7 @@
 
 #include <BaselineFootstepPlanner/FootstepPlanner.h>
 
-TEST(TestPreviewControlZmp, Test1)
+TEST(TestFootstepPlanner, Test1)
 {
   auto env_config = std::make_shared<BFP::FootstepEnvConfig>();
   // clang-format off
