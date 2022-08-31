@@ -13,8 +13,9 @@
 using namespace BFP;
 
 FootstepPlannerNode::FootstepPlannerNode()
-: planner_(std::make_shared<FootstepPlanner>(std::make_shared<FootstepEnvConfigRos>()))
 {
+  planner_ = std::make_shared<FootstepPlanner>(std::make_shared<FootstepEnvConfigRos>());
+
   footstep_seq_pub_ = nh_.advertise<baseline_footstep_planner::FootstepSequence2DStamped>("footstep_sequence", 1, true);
   expanded_states_pub_ = nh_.advertise<sensor_msgs::PointCloud>("expanded_states", 1, true);
   start_pose_sub_ =
@@ -60,7 +61,8 @@ void FootstepPlannerNode::run()
     {
       publishFootstepSeq();
 
-      ROS_INFO("[FootstepPlannerNode] new path found. time: %.2lf, cost: %d, eps: %.2lf, path len: %ld, states: %d.",
+      ROS_INFO("[FootstepPlannerNode] New path found. time: %.2lf, cost: %d, eps: %.2lf, footsteps num: %ld, expanded "
+               "states: %d.",
                accumulated_duration_, planner_->solution_.path_cost, planner_->solution_.heuristics_weight,
                planner_->solution_.id_list.size(), planner_->env_->stateNum());
     }
@@ -72,6 +74,8 @@ void FootstepPlannerNode::run()
 
 void FootstepPlannerNode::setStartGoal()
 {
+  ROS_INFO("[FootstepPlannerNode] Update start and goal.");
+
   planner_->setStartGoal(planner_->env_->makeStateFromMidpose(start_pose_, Foot::LEFT),
                          planner_->env_->makeStateFromMidpose(start_pose_, Foot::RIGHT),
                          planner_->env_->makeStateFromMidpose(goal_pose_, Foot::LEFT),

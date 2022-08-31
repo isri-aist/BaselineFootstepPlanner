@@ -98,7 +98,7 @@ void FootstepDijkstraPathHeuristic::setupPathDistance(int start_id, int goal_id)
 
   double search_duration =
       std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::system_clock::now() - start_time).count();
-  ROS_INFO("[FootstepDijkstraPathHeuristic] calcPathDistance took %lf [sec]", search_duration);
+  ROS_DEBUG("[FootstepDijkstraPathHeuristic] calcPathDistance took %lf [sec]", search_duration);
 
   // dump the distance field
   if(dump_distance_field_)

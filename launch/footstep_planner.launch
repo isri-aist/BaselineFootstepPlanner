@@ -14,6 +14,5 @@
         output="screen" clear_params="true" />
 
   <node pkg="rviz" type="rviz" name="$(anon rviz)"
-        args="-d $(find baseline_footstep_planner)/rviz/FootstepPlanner.rviz"
-        output="screen" clear_params="true" />
+        args="-d $(find baseline_footstep_planner)/rviz/FootstepPlanner.rviz" />
 </launch>

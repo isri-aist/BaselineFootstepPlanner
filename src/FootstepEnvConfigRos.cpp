@@ -46,7 +46,7 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
   }
   nh.param("dijkstra_path_heuristic_expand_scale", dijkstra_path_heuristic_expand_scale,
            dijkstra_path_heuristic_expand_scale);
-  ROS_DEBUG_STREAM("[FootstepEnvConfigRos] Heuristic type: " << std::to_string(heuristic_type));
+  ROS_INFO_STREAM("[FootstepEnvConfigRos] Heuristic type: " << std::to_string(heuristic_type));
 
   nh.param("nominal_foot_separation", nominal_foot_separation, nominal_foot_separation);
 
