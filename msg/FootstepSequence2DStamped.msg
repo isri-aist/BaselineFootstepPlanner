@@ -1,2 +1,0 @@
-Header header
-FootstepSequence2D sequence
