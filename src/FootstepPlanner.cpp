@@ -21,7 +21,7 @@ FootstepPlanner::FootstepPlanner(const std::shared_ptr<FootstepEnvConfig> & env_
 {
 }
 
-void FootstepPlanner::setStartGoal(const std::shared_ptr<FootstepState> & start_left_state,
+bool FootstepPlanner::setStartGoal(const std::shared_ptr<FootstepState> & start_left_state,
                                    const std::shared_ptr<FootstepState> & start_right_state,
                                    const std::shared_ptr<FootstepState> & goal_left_state,
                                    const std::shared_ptr<FootstepState> & goal_right_state)
@@ -33,11 +33,11 @@ void FootstepPlanner::setStartGoal(const std::shared_ptr<FootstepState> & start_
   // set start and goal
   if(!env_->setStart(start_left_state, start_right_state))
   {
-    return;
+    return false;
   }
   if(!env_->setGoal(goal_left_state, goal_right_state))
   {
-    return;
+    return false;
   }
 
   // setup environment
@@ -58,10 +58,17 @@ void FootstepPlanner::setStartGoal(const std::shared_ptr<FootstepState> & start_
 
   // reset solution
   solution_.reset();
+
+  return true;
 }
 
 bool FootstepPlanner::run(bool continue_until_solved, double max_planning_duration, double initial_heuristics_weight)
 {
+  if(!env_->is_inited_)
+  {
+    return false;
+  }
+
   // plan
   serach_->set_initialsolution_eps(initial_heuristics_weight);
   serach_->set_search_mode(continue_until_solved);

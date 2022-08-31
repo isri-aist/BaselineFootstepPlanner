@@ -43,8 +43,9 @@ public:
       \param start_right_state state of start right footstep
       \param goal_left_state state of goal left footstep
       \param goal_right_state state of goal right footstep
+      \return true if start and goal are valid
   */
-  void setStartGoal(const std::shared_ptr<FootstepState> & start_left_state,
+  bool setStartGoal(const std::shared_ptr<FootstepState> & start_left_state,
                     const std::shared_ptr<FootstepState> & start_right_state,
                     const std::shared_ptr<FootstepState> & goal_left_state,
                     const std::shared_ptr<FootstepState> & goal_right_state);

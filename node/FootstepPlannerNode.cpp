@@ -69,6 +69,7 @@ void FootstepPlannerNode::run()
     publishExpandedStates();
 
     ros::spinOnce();
+    rate.sleep();
   }
 }
 
@@ -76,14 +77,14 @@ void FootstepPlannerNode::setStartGoal()
 {
   ROS_INFO("[FootstepPlannerNode] Update start and goal.");
 
+  publishEmptyPath();
+
   planner_->setStartGoal(planner_->env_->makeStateFromMidpose(start_pose_, Foot::LEFT),
                          planner_->env_->makeStateFromMidpose(start_pose_, Foot::RIGHT),
                          planner_->env_->makeStateFromMidpose(goal_pose_, Foot::LEFT),
                          planner_->env_->makeStateFromMidpose(goal_pose_, Foot::RIGHT));
 
   accumulated_duration_ = 0.0;
-
-  publishEmptyPath();
 }
 
 void FootstepPlannerNode::publishFootstepSeq()

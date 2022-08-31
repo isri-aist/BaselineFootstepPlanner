@@ -57,6 +57,8 @@ bool FootstepEnv::InitializeMDPCfg(MDPConfig * MDPCfg)
   MDPCfg->startstateid = start_left_id_;
   MDPCfg->goalstateid = goal_left_id_;
 
+  is_inited_ = true;
+
   return true;
 }
 

@@ -244,12 +244,14 @@ public:
   /** \brief Set start footstep.
       \param left_state state of start left footstep
       \param right_state state of start right footstep
+      \return true if start footstep is valid
   */
   bool setStart(const std::shared_ptr<FootstepState> & left_state, const std::shared_ptr<FootstepState> & right_state);
 
   /** \brief Set goal footstep.
       \param left_state state of goal left footstep
       \param right_state state of goal right footstep
+      \return true if goal footstep is valid
   */
   bool setGoal(const std::shared_ptr<FootstepState> & left_state, const std::shared_ptr<FootstepState> & right_state);
 
@@ -327,6 +329,9 @@ protected:
   int addStateIfNotExists(const std::shared_ptr<FootstepState> & state);
 
 public:
+  //! Whether start and goal are initialized
+  bool is_inited_ = false;
+
   //! State ID of start left footstep
   int start_left_id_ = -1;
 
