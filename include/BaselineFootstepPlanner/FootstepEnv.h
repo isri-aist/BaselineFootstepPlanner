@@ -69,11 +69,11 @@ struct FootstepEnvConfig
   */
   double cost_scale = 1e3;
 
-  //! Cost of one step (unit correspond to [m])
-  double step_cost = 1.0;
-
   //! Scale for converting orientation distance to position distance in cost calculation [m/rad]
   double cost_theta_scale = 0.0;
+
+  //! Cost of one step (unit correspond to [m])
+  double step_cost = 1.0;
 
   //! Heuristics type
   HeuristicType heuristic_type = HeuristicType::DijkstraPath;
@@ -84,10 +84,10 @@ struct FootstepEnvConfig
   //! Nominal distance between left and right feet [m]
   double nominal_foot_separation = 0.2;
 
-  //! List of feasible footsteps for left foot relative to right foot
+  //! List of feasible footsteps of left foot relative to right foot
   std::vector<FootstepActionCont> r2l_action_cont_list;
 
-  /** \brief Foot reachable region
+  /** \brief Foot reachable region of left foot relative to right foot
 
       This is used to improve goal convergence.
 
@@ -97,8 +97,8 @@ struct FootstepEnvConfig
   FootstepActionCont r2l_reachable_max = FootstepActionCont(0.1, 0.05, degToRad(10));
   //! @}
 
-  //! Rectangle obstacles
-  std::vector<Rect> rect_obsts;
+  //! Rectangle obstacle list
+  std::vector<Rect> rect_obst_list;
 };
 
 class FootstepDijkstraPathHeuristic;

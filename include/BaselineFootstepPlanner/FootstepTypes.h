@@ -78,7 +78,10 @@ struct FootstepActionCont
   //! Continuous X position [m]
   double x;
 
-  //! Continuous Y position [m]
+  /** \brief Continuous Y position [m]
+
+      \note Y position is the value subtracted by nominal distance between left and right feet.
+  */
   double y;
 
   //! Continuous orientation [rad]
@@ -88,6 +91,8 @@ struct FootstepActionCont
       \param _x continuous X position [m]
       \param _y continuous Y position [m]
       \param _theta continuous orientation [rad]
+
+      \note Y position is the value subtracted by nominal distance between left and right feet.
   */
   FootstepActionCont(double _x, double _y, double _theta) : x(_x), y(_y), theta(_theta) {}
 };

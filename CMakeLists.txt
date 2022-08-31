@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
+  sensor_msgs
   )
 
 # SBPL
@@ -40,6 +41,7 @@ catkin_package(
   roscpp
   std_msgs
   geometry_msgs
+  sensor_msgs
   DEPENDS SBPL
   INCLUDE_DIRS include
   LIBRARIES BaselineFootstepPlanner

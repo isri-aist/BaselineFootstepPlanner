@@ -363,7 +363,7 @@ bool FootstepEnv::checkRectCollision(double cx, double cy, const Rect & rect_obs
 
 bool FootstepEnv::checkXyValid(double cx, double cy) const
 {
-  for(const auto & rect_obst : config_->rect_obsts)
+  for(const auto & rect_obst : config_->rect_obst_list)
   {
     if(checkRectCollision(cx, cy, rect_obst))
     {

@@ -19,7 +19,7 @@ TEST(TestPreviewControlZmp, Test1)
   // clang-format on
   env_config->r2l_reachable_min = BFP::FootstepActionCont(-0.05, 0.0, -0.2);
   env_config->r2l_reachable_max = BFP::FootstepActionCont(0.1, 0.1, 0.2);
-  env_config->rect_obsts = {BFP::Rect(0.5, 0.0, 0.15, 0.75)};
+  env_config->rect_obst_list = {BFP::Rect(0.5, 0.0, 0.15, 0.75)};
 
   auto planner = std::make_shared<BFP::FootstepPlanner>(env_config);
 
