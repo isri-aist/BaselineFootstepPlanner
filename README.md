@@ -44,6 +44,7 @@ Make sure that it is built with `--catkin-make-args tests` option.
 ```
 $ roslaunch baseline_footstep_planner footstep_planner.launch
 ```
+https://user-images.githubusercontent.com/6636600/187672008-fb93fb0e-5ec0-4054-a31d-68ce6c884005.mp4
 
 ### Standalone planning
 ```
