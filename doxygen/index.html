@@ -72,8 +72,40 @@ $(function() {
 <div class="title"><a href="https://github.com/isri-aist/BaselineFootstepPlanner">BaselineFootstepPlanner</a> </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Humanoid footstep planner based on baseline methods with graph search </p>
-</div></div><!-- PageDoc -->
+<div class="textblock"><p>Humanoid footstep planner based on baseline methods with graph search</p>
+<p><a href="https://github.com/isri-aist/BaselineFootstepPlanner/actions/workflows/ci.yaml"><object type="image/svg+xml" data="https://github.com/isri-aist/BaselineFootstepPlanner/actions/workflows/ci.yaml/badge.svg" style="pointer-events: none;">CI</object></a> <a href="https://isri-aist.github.io/BaselineFootstepPlanner/"><img src="https://img.shields.io/badge/doxygen-online-brightgreen?logo=read-the-docs&amp;style=flat" alt="Documentation" class="inline"/></a></p>
+<h1>Install</h1>
+<h2>Requirements</h2>
+<ul>
+<li>Compiler supporting C++17</li>
+<li>Tested on <code>Ubuntu 20.04 / ROS Noetic</code> and <code>Ubuntu 18.04 / ROS Melodic</code></li>
+</ul>
+<h2>Dependencies</h2>
+<p>This package depends on</p><ul>
+<li><a href="https://github.com/sbpl/sbpl">SBPL</a> (automatically installed by <code>rosdep install</code>)</li>
+</ul>
+<h2>Installation procedure</h2>
+<p>It is assumed that ROS is installed.</p>
+<ol type="1">
+<li>Setup catkin workspace. <div class="fragment"><div class="line">$ mkdir -p ~/ros/ws_bfp/src</div>
+<div class="line">$ cd ~/ros/ws_bfp</div>
+<div class="line">$ wstool init src</div>
+<div class="line">$ wstool set -t src isri-aist/BaselineFootstepPlanner git@github.com:isri-aist/BaselineFootstepPlanner.git --git -y</div>
+<div class="line">$ wstool update -t src</div>
+</div><!-- fragment --></li>
+<li>Install dependent packages. <div class="fragment"><div class="line">$ source /opt/ros/${ROS_DISTRO}/setup.bash</div>
+<div class="line">$ rosdep install -y -r --from-paths src --ignore-src</div>
+</div><!-- fragment --></li>
+<li>Build a package. <div class="fragment"><div class="line">$ catkin build baseline_footstep_planner -DCMAKE_BUILD_TYPE=RelWithDebInfo --catkin-make-args all tests</div>
+</div><!-- fragment --></li>
+</ol>
+<h1>Examples</h1>
+<p>Make sure that it is built with <code>--catkin-make-args tests</code> option.</p>
+<h2>Interactive planning</h2>
+<div class="fragment"><div class="line">$ roslaunch baseline_footstep_planner footstep_planner.launch</div>
+</div><!-- fragment --><h2>Standalone planning</h2>
+<div class="fragment"><div class="line">$ rosrun baseline_footstep_planner TestFootstepPlanner</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
