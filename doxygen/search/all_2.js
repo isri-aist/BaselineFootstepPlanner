@@ -10,10 +10,11 @@ var searchData=
   ['checkstatevalid_9',['checkStateValid',['../classBFP_1_1FootstepEnv.html#a9b35aadf8f1218103ae82147fd3d1966',1,'BFP::FootstepEnv']]],
   ['checkxyvalid_10',['checkXyValid',['../classBFP_1_1FootstepEnv.html#a0f07086d63b4f51950f9d9cbd64bb5cd',1,'BFP::FootstepEnv']]],
   ['clear_11',['clear',['../classBFP_1_1FootstepEnv.html#abaf19caee1725e57231c2d5ccee26531',1,'BFP::FootstepEnv']]],
-  ['config_5f_12',['config_',['../classBFP_1_1FootstepEnv.html#a77108ddc3b4bbc91e68314b860a10a15',1,'BFP::FootstepEnv']]],
-  ['conttodisctheta_13',['contToDiscTheta',['../classBFP_1_1FootstepEnv.html#ad4200628f655eda5e92ae4b4810e9b51',1,'BFP::FootstepEnv']]],
-  ['conttodiscxy_14',['contToDiscXy',['../classBFP_1_1FootstepEnv.html#a3a6860c7a449b52b931009438758add0',1,'BFP::FootstepEnv']]],
-  ['conttogrid_15',['contToGrid',['../classBFP_1_1FootstepDijkstraPathHeuristic.html#ad8b9b67cc077aad9902d30c3f2356176',1,'BFP::FootstepDijkstraPathHeuristic']]],
-  ['cost_5fscale_16',['cost_scale',['../structBFP_1_1FootstepEnvConfig.html#a8fbecce1622ea35b1936d487afdbc362',1,'BFP::FootstepEnvConfig']]],
-  ['cost_5ftheta_5fscale_17',['cost_theta_scale',['../structBFP_1_1FootstepEnvConfig.html#ab573783e0db7823413fc57e089a2e2c7',1,'BFP::FootstepEnvConfig']]]
+  ['config_12',['config',['../classBFP_1_1FootstepEnv.html#a2e39c648c32fe2d911cefb913fabba65',1,'BFP::FootstepEnv']]],
+  ['config_5f_13',['config_',['../classBFP_1_1FootstepEnv.html#a77108ddc3b4bbc91e68314b860a10a15',1,'BFP::FootstepEnv']]],
+  ['conttodisctheta_14',['contToDiscTheta',['../classBFP_1_1FootstepEnv.html#ad4200628f655eda5e92ae4b4810e9b51',1,'BFP::FootstepEnv']]],
+  ['conttodiscxy_15',['contToDiscXy',['../classBFP_1_1FootstepEnv.html#a3a6860c7a449b52b931009438758add0',1,'BFP::FootstepEnv']]],
+  ['conttogrid_16',['contToGrid',['../classBFP_1_1FootstepDijkstraPathHeuristic.html#ad8b9b67cc077aad9902d30c3f2356176',1,'BFP::FootstepDijkstraPathHeuristic']]],
+  ['cost_5fscale_17',['cost_scale',['../structBFP_1_1FootstepEnvConfig.html#a8fbecce1622ea35b1936d487afdbc362',1,'BFP::FootstepEnvConfig']]],
+  ['cost_5ftheta_5fscale_18',['cost_theta_scale',['../structBFP_1_1FootstepEnvConfig.html#ab573783e0db7823413fc57e089a2e2c7',1,'BFP::FootstepEnvConfig']]]
 ];

@@ -109,7 +109,7 @@ Collaboration diagram for BFP::FootstepEnv:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6c8086ecf4e7f1371ad9ab105123e5d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBFP_1_1FootstepEnv.html#a6c8086ecf4e7f1371ad9ab105123e5d8">FootstepEnv</a> (const std::shared_ptr&lt; <a class="el" href="structBFP_1_1FootstepEnvConfig.html">FootstepEnvConfig</a> &gt; &amp;config)</td></tr>
+<tr class="memitem:a6c8086ecf4e7f1371ad9ab105123e5d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBFP_1_1FootstepEnv.html#a6c8086ecf4e7f1371ad9ab105123e5d8">FootstepEnv</a> (const std::shared_ptr&lt; <a class="el" href="structBFP_1_1FootstepEnvConfig.html">FootstepEnvConfig</a> &gt; &amp;<a class="el" href="classBFP_1_1FootstepEnv.html#a2e39c648c32fe2d911cefb913fabba65">config</a>)</td></tr>
 <tr class="memdesc:a6c8086ecf4e7f1371ad9ab105123e5d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classBFP_1_1FootstepEnv.html#a6c8086ecf4e7f1371ad9ab105123e5d8">More...</a><br /></td></tr>
 <tr class="separator:a6c8086ecf4e7f1371ad9ab105123e5d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af42d772afb8bf72989ce7a9d9277de56"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBFP_1_1FootstepEnv.html#af42d772afb8bf72989ce7a9d9277de56">InitializeEnv</a> (const char *sEnvFile) override</td></tr>
@@ -143,6 +143,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab2fb9452c6b109a29c3f885e3ddd52e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a2ce7497746ee7604c4e195c8f55db7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBFP_1_1FootstepEnv.html#a9a2ce7497746ee7604c4e195c8f55db7">PrintEnv_Config</a> (FILE *f_out) override</td></tr>
 <tr class="separator:a9a2ce7497746ee7604c4e195c8f55db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e39c648c32fe2d911cefb913fabba65"><td class="memItemLeft" align="right" valign="top">const std::shared_ptr&lt; <a class="el" href="structBFP_1_1FootstepEnvConfig.html">FootstepEnvConfig</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBFP_1_1FootstepEnv.html#a2e39c648c32fe2d911cefb913fabba65">config</a> () const</td></tr>
+<tr class="memdesc:a2e39c648c32fe2d911cefb913fabba65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const accessor to the configuration.  <a href="classBFP_1_1FootstepEnv.html#a2e39c648c32fe2d911cefb913fabba65">More...</a><br /></td></tr>
+<tr class="separator:a2e39c648c32fe2d911cefb913fabba65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaf19caee1725e57231c2d5ccee26531"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBFP_1_1FootstepEnv.html#abaf19caee1725e57231c2d5ccee26531">clear</a> ()</td></tr>
 <tr class="memdesc:abaf19caee1725e57231c2d5ccee26531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all states.  <a href="classBFP_1_1FootstepEnv.html#abaf19caee1725e57231c2d5ccee26531">More...</a><br /></td></tr>
 <tr class="separator:abaf19caee1725e57231c2d5ccee26531"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -615,6 +618,35 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a2e39c648c32fe2d911cefb913fabba65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e39c648c32fe2d911cefb913fabba65">&#9670;&nbsp;</a></span>config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::shared_ptr&lt;<a class="el" href="structBFP_1_1FootstepEnvConfig.html">FootstepEnvConfig</a>&gt;&amp; BFP::FootstepEnv::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Const accessor to the configuration. </p>
+
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00180">180</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+
+</div>
+</div>
 <a id="ad4200628f655eda5e92ae4b4810e9b51"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad4200628f655eda5e92ae4b4810e9b51">&#9670;&nbsp;</a></span>contToDiscTheta()</h2>
 
@@ -701,7 +733,7 @@ template&lt;typename ScalarType  = int&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00207">207</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00213">213</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -739,7 +771,7 @@ template&lt;typename ScalarType  = int&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00196">196</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00202">202</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1073,7 +1105,7 @@ template&lt;typename ArrayType &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00231">231</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00237">237</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1480,7 +1512,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Get the number of created states. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00271">271</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00277">277</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1532,7 +1564,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Configuration. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00352">352</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00358">358</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1558,7 +1590,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Dijkstra path based heuristics. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00380">380</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00386">386</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1576,7 +1608,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Number of state expansion. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00348">348</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00354">354</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1594,7 +1626,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>State ID of goal left footstep. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00342">342</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00348">348</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1612,7 +1644,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>State ID of goal right footstep. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00345">345</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00351">351</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1639,7 +1671,7 @@ template&lt;typename ArrayType &gt; </div>
 <p>State list. </p>
 <p>The list index is state ID. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00358">358</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00364">364</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1657,7 +1689,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Whether start and goal are initialized. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00333">333</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00339">339</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1683,7 +1715,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Footstep action list for each discretized theta. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00368">368</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00374">374</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1709,7 +1741,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Footstep action list for each discretized theta. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00367">367</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00373">373</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1727,7 +1759,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>State ID of start left footstep. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00336">336</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00342">342</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1745,7 +1777,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>State ID of start right footstep. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00339">339</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00345">345</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1771,7 +1803,7 @@ template&lt;typename ArrayType &gt; </div>
 
 <p>Map from state to state ID. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00361">361</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00367">367</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1795,7 +1827,7 @@ template&lt;typename ArrayType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00376">376</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00382">382</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
@@ -1822,7 +1854,7 @@ template&lt;typename ArrayType &gt; </div>
 <p>Maximum footstep distance. </p>
 <p>This is calculated from ::Configuration::r2l_action_cont_list automatically. </p>
 
-<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00375">375</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="FootstepEnv_8h_source.html#l00381">381</a> of file <a class="el" href="FootstepEnv_8h_source.html">FootstepEnv.h</a>.</p>
 
 </div>
 </div>
