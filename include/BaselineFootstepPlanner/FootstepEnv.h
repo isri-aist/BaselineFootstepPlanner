@@ -176,6 +176,12 @@ public:
     throw std::runtime_error("FootstepEnv::PrintEnv_Config is not expected to be called.");
   }
 
+  /** \brief Const accessor to the configuration. */
+  inline const std::shared_ptr<FootstepEnvConfig> & config() const
+  {
+    return config_;
+  }
+
   /** \brief Clear all states. */
   void clear();
 
