@@ -50,3 +50,6 @@ https://user-images.githubusercontent.com/6636600/187672008-fb93fb0e-5ec0-4054-a
 ```
 $ rosrun baseline_footstep_planner TestFootstepPlanner
 ```
+
+## Integration into controller
+The footstep planner in this library is available in the humanoid controller [BaselineWalkingController](https://github.com/isri-aist/BaselineWalkingController).
