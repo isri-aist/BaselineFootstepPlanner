@@ -2,10 +2,9 @@
 
 #include <algorithm>
 
-#include <ros/console.h>
-
 #include <BaselineFootstepPlanner/FootstepDijkstraPathHeuristic.h>
 #include <BaselineFootstepPlanner/FootstepEnv.h>
+#include <BaselineFootstepPlanner/console.h>
 
 using namespace BFP;
 
@@ -209,7 +208,7 @@ bool FootstepEnv::setStart(const std::shared_ptr<FootstepState> & left_state,
 {
   if(!(checkStateValid(left_state) && checkStateValid(right_state)))
   {
-    ROS_WARN("[FootstepEnv] Invalid start.");
+    BFP_WARN("[FootstepEnv] Invalid start.");
     return false;
   }
 
@@ -224,7 +223,7 @@ bool FootstepEnv::setGoal(const std::shared_ptr<FootstepState> & left_state,
 {
   if(!(checkStateValid(left_state) && checkStateValid(right_state)))
   {
-    ROS_WARN("[FootstepEnv] Invalid goal.");
+    BFP_WARN("[FootstepEnv] Invalid goal.");
     return false;
   }
 
@@ -246,7 +245,7 @@ std::shared_ptr<FootstepState> FootstepEnv::getStateFromId(int id) const
 
 void FootstepEnv::printState(const std::shared_ptr<FootstepState> & state) const
 {
-  ROS_INFO("FootstepState[id: %d, x: %5.2lf, y: %5.2lf, theta: %5.2lf, foot: %s]", state->id_, discToContXy(state->x_),
+  BFP_INFO("FootstepState[id: %d, x: %5.2lf, y: %5.2lf, theta: %5.2lf, foot: %s]", state->id_, discToContXy(state->x_),
            discToContXy(state->y_), discToContTheta(state->theta_), std::to_string(state->foot_).c_str());
 }
 
@@ -307,7 +306,7 @@ void FootstepEnv::setupAction()
     step_xy_max_ = std::max(step_xy_max_, std::sqrt(delta_cx * delta_cx + delta_cy * delta_cy));
     step_theta_max_ = std::max(step_theta_max_, std::abs(delta_ctheta));
   }
-  ROS_DEBUG("[FootstepEnv::setupAction] step_xy_max: %lf, step_theta_max: %lf", step_xy_max_, step_theta_max_);
+  BFP_DEBUG("[FootstepEnv::setupAction] step_xy_max: %lf, step_theta_max: %lf", step_xy_max_, step_theta_max_);
 }
 
 void FootstepEnv::setupDijkstraPathHeuristic()
