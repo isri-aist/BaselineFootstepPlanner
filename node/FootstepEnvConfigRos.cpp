@@ -2,7 +2,7 @@
 
 #include <ros/ros.h>
 
-#include <BaselineFootstepPlanner/FootstepEnvConfigRos.h>
+#include "FootstepEnvConfigRos.h"
 
 using namespace BFP;
 
