@@ -1,4 +1,4 @@
-name: CI of BaselineFootstepPlanner
+name: CI of BaselineFootstepPlanner (standalone)
 
 on:
   push:
