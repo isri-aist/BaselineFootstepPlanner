@@ -1,7 +1,5 @@
 /* Author: Masaki Murooka */
 
-#include <ros/console.h>
-
 #include <BaselineFootstepPlanner/FootstepPlanner.h>
 
 using namespace BFP;

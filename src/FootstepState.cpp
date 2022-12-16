@@ -3,12 +3,13 @@
 #include <ros/console.h>
 
 #include <BaselineFootstepPlanner/FootstepState.h>
+#include <BaselineFootstepPlanner/console.h>
 
 using namespace BFP;
 
 void FootstepState::print() const
 {
-  ROS_INFO("FootstepState[id: %d, x: %d, y: %d, theta: %d, foot: %s]", id_, x_, y_, theta_,
+  BFP_INFO("FootstepState[id: %d, x: %d, y: %d, theta: %d, foot: %s]", id_, x_, y_, theta_,
            std::to_string(foot_).c_str());
 }
 

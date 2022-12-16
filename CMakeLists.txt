@@ -1,61 +1,79 @@
-cmake_minimum_required(VERSION 3.1)
-project(baseline_footstep_planner)
+cmake_minimum_required(VERSION 3.6)
 
-# If CMAKE_CXX_STANDARD is not specified, the features specified in target_compile_features or INTERFACE_COMPILE_FEATURES
-# may cause -std=gnu++11 to be added to the compile options and overwrite the C++ version specified in add_compile_options.
+set(PROJECT_NAME baseline_footstep_planner)
+set(PROJECT_GENERATED_HEADERS_SKIP_DEPRECATED ON)
+set(PROJECT_GENERATED_HEADERS_SKIP_CONFIG ON)
+set(PROJECT_GENERATED_HEADERS_SKIP_WARNING ON)
+set(PROJECT_URL https://github.com/isri-aist/${PROJECT_NAME})
+set(PROJECT_DESCRIPTION "")
 set(CMAKE_CXX_STANDARD 17)
-add_compile_options(
-  -std=c++17
-  -Wno-terminate # for SBPL
-  )
+set(PROJECT_USE_CMAKE_EXPORT TRUE)
+set(CXX_DISABLE_WERROR ON)
+option(INSTALL_DOCUMENTATION "Generate and install the documentation" OFF)
 
-find_package(catkin REQUIRED COMPONENTS
-  message_generation
-  roscpp
-  std_msgs
-  geometry_msgs
-  sensor_msgs
+include(cmake/base.cmake)
+project(${PROJECT_NAME} LANGUAGES CXX)
+
+if(DEFINED CATKIN_DEVEL_PREFIX)
+  set(DOXYGEN_HTML_OUTPUT html)
+  find_package(catkin REQUIRED COMPONENTS
+    message_generation
+    roscpp
+    std_msgs
+    geometry_msgs
+    sensor_msgs
   )
+else()
+  set(DOXYGEN_HTML_OUTPUT doxygen-html)
+  set(CATKIN_ENABLE_TESTING OFF)
+  option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
+endif()
 
 # SBPL
 find_package(PkgConfig)
-pkg_check_modules(SBPL REQUIRED sbpl)
-message(NOTICE "- SBPL_INCLUDE_DIRS: ${SBPL_INCLUDE_DIRS}")
-message(NOTICE "- SBPL_LIBRARY_DIRS: ${SBPL_LIBRARY_DIRS}")
-link_directories(${SBPL_LIBRARY_DIRS})
+pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)
+if(NOT DEFINED CATKIN_DEVEL_PREFIX)
+  set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
+find_package(PkgConfig)
+pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)")
+endif()
 
-add_message_files(
-  FILES
-  Footstep2D.msg
-  FootstepSequence2D.msg
-  FootstepSequence2DStamped.msg
-)
-
-generate_messages(
-  DEPENDENCIES std_msgs geometry_msgs
+if(DEFINED CATKIN_DEVEL_PREFIX)
+  add_message_files(
+    FILES
+      Footstep2D.msg
+      FootstepSequence2D.msg
+      FootstepSequence2DStamped.msg
   )
-
-catkin_package(
-  CATKIN_DEPENDS
-  message_runtime
-  roscpp
-  std_msgs
-  geometry_msgs
-  sensor_msgs
-  DEPENDS SBPL
-  INCLUDE_DIRS include
-  LIBRARIES BaselineFootstepPlanner
+  generate_messages(
+    DEPENDENCIES std_msgs geometry_msgs
   )
+  catkin_package(
+    CATKIN_DEPENDS
+      message_runtime
+      roscpp
+      std_msgs
+      geometry_msgs
+      sensor_msgs
+    DEPENDS
+      SBPL
+    INCLUDE_DIRS
+      include
+    LIBRARIES
+      BaselineFootstepPlanner
+  )
+endif()
 
 add_subdirectory(src)
 
-add_subdirectory(node)
+if(DEFINED CATKIN_DEVEL_PREFIX)
+  add_subdirectory(node)
+endif()
 
-if(CATKIN_ENABLE_TESTING)
+if(BUILD_TESTING OR CATKIN_ENABLE_TESTING)
   add_subdirectory(tests)
 endif()
 
-OPTION(INSTALL_DOCUMENTATION "Generate and install the documentation" OFF)
 if(INSTALL_DOCUMENTATION)
   add_subdirectory(doc)
 endif()

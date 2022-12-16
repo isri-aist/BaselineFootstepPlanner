@@ -3,10 +3,9 @@
 #include <chrono>
 #include <fstream>
 
-#include <ros/console.h>
-
 #include <BaselineFootstepPlanner/FootstepDijkstraPathHeuristic.h>
 #include <BaselineFootstepPlanner/FootstepEnv.h>
+#include <BaselineFootstepPlanner/console.h>
 
 using namespace BFP;
 
@@ -40,8 +39,8 @@ FootstepDijkstraPathHeuristic::~FootstepDijkstraPathHeuristic()
 void FootstepDijkstraPathHeuristic::printSettings()
 {
   std::array<double, 2> max = {min_[X] + divide_num_[X] * divide_step_, min_[Y] + divide_num_[Y] * divide_step_};
-  ROS_DEBUG("[FootstepDijkstraPathHeuristic] Initialize FootstepDijkstraPathHeuristic.");
-  ROS_DEBUG("  - min: (%lf, %lf)  max: (%lf, %lf)  divide_num: (%d, %d).", min_[X], min_[Y], max[X], max[Y],
+  BFP_DEBUG("[FootstepDijkstraPathHeuristic] Initialize FootstepDijkstraPathHeuristic.");
+  BFP_DEBUG("  - min: (%lf, %lf)  max: (%lf, %lf)  divide_num: (%d, %d).", min_[X], min_[Y], max[X], max[Y],
             divide_num_[X], divide_num_[Y]);
 }
 
@@ -85,7 +84,7 @@ void FootstepDijkstraPathHeuristic::setupPathDistance(int start_id, int goal_id)
 
   std::array<int, 2> start_gxy = stateIdToGrid(start_id);
   std::array<int, 2> goal_gxy = stateIdToGrid(goal_id);
-  ROS_DEBUG("[FootstepDijkstraPathHeuristic] start grid: (%d, %d), goal grid: (%d, %d)", start_gxy[X], start_gxy[Y],
+  BFP_DEBUG("[FootstepDijkstraPathHeuristic] start grid: (%d, %d), goal grid: (%d, %d)", start_gxy[X], start_gxy[Y],
             goal_gxy[X], goal_gxy[Y]);
 
   // search
@@ -98,7 +97,7 @@ void FootstepDijkstraPathHeuristic::setupPathDistance(int start_id, int goal_id)
 
   double search_duration =
       std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::system_clock::now() - start_time).count();
-  ROS_DEBUG("[FootstepDijkstraPathHeuristic] calcPathDistance took %lf [sec]", search_duration);
+  BFP_DEBUG("[FootstepDijkstraPathHeuristic] calcPathDistance took %lf [sec]", search_duration);
 
   // dump the distance field
   if(dump_distance_field_)
@@ -122,7 +121,7 @@ void FootstepDijkstraPathHeuristic::setupPathDistance(int start_id, int goal_id)
       }
       ofs_path << std::endl;
     }
-    ROS_INFO_STREAM("Run the following commands in Python to visualize Dijkstra distance field:\n"
+    BFP_INFO_STREAM("Run the following commands in Python to visualize Dijkstra distance field:\n"
                     << "  import numpy as np\n"
                     << "  import matplotlib.pyplot as plt\n"
                     << "  dist_field = np.loadtxt(\"" << dijkstra_filename << "\")\n"
@@ -135,7 +134,7 @@ int FootstepDijkstraPathHeuristic::calcHeuristic(int from_id, int to_id)
 {
   if(goal_id_ != to_id)
   {
-    ROS_INFO("[FootstepDijkstraPathHeuristic] Goal changed. Need to reset FootstepDijkstraPathHeuristic.");
+    BFP_INFO("[FootstepDijkstraPathHeuristic] Goal changed. Need to reset FootstepDijkstraPathHeuristic.");
   }
 
   const std::shared_ptr<FootstepState> & from_state = env_->id_to_state_list_[from_id];
@@ -148,7 +147,7 @@ int FootstepDijkstraPathHeuristic::calcHeuristic(int from_id, int to_id)
   }
   catch(const std::runtime_error & e)
   {
-    ROS_INFO_THROTTLE(1,
+    BFP_INFO_THROTTLE(1,
                       "[FootstepDijkstraPathHeuristic] The heuristic of an out-of-map state was requested: (%lf, %lf)",
                       env_->discToContXy(from_state->x_), env_->discToContXy(from_state->y_));
     constexpr int out_of_map_heuristic = 100000000;
