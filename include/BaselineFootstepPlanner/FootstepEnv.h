@@ -131,7 +131,8 @@ public:
   */
   virtual int GetGoalHeuristic(int id) override;
 
-  inline virtual int GetStartHeuristic(int id) override
+  inline virtual int GetStartHeuristic(int // id
+                                       ) override
   {
     throw std::runtime_error("FootstepEnv::GetStartHeuristic is not expected to be called.");
     return 0;
@@ -144,17 +145,22 @@ public:
   */
   virtual void GetSuccs(int source_id, std::vector<int> * succ_id_list, std::vector<int> * cost_list) override;
 
-  inline virtual void GetPreds(int target_id, std::vector<int> * prev_id_list, std::vector<int> * cost_list) override
+  inline virtual void GetPreds(int, // target_id
+                               std::vector<int> *, // prev_id_list
+                               std::vector<int> * // cost_list
+                               ) override
   {
     throw std::runtime_error("FootstepEnv::GetPreds is not expected to be called.");
   }
 
-  inline virtual void SetAllActionsandAllOutcomes(CMDPSTATE * state) override
+  inline virtual void SetAllActionsandAllOutcomes(CMDPSTATE * // state
+                                                  ) override
   {
     throw std::runtime_error("FootstepEnv::SetAllActionsandAllOutcomes is not expected to be called.");
   }
 
-  inline virtual void SetAllPreds(CMDPSTATE * state) override
+  inline virtual void SetAllPreds(CMDPSTATE * // state
+                                  ) override
   {
     throw std::runtime_error("FootstepEnv::SetAllPreds is not expected to be called.");
   }
@@ -162,16 +168,20 @@ public:
   /** \brief Get the number of created states. */
   inline virtual int SizeofCreatedEnv() override
   {
-    return id_to_state_list_.size();
+    return static_cast<int>(id_to_state_list_.size());
   }
 
   /** \brief Print state. */
-  inline virtual void PrintState(int id, bool verbose, FILE * f_out = nullptr) override
+  inline virtual void PrintState(int, // id
+                                 bool, // verbose
+                                 FILE * // f_out = nullptr
+                                 ) override
   {
     // do nothing
   }
 
-  inline virtual void PrintEnv_Config(FILE * f_out) override
+  inline virtual void PrintEnv_Config(FILE * // f_out
+                                      ) override
   {
     throw std::runtime_error("FootstepEnv::PrintEnv_Config is not expected to be called.");
   }
@@ -276,7 +286,7 @@ public:
   /** \brief Get the number of created states. */
   inline int stateNum() const
   {
-    return id_to_state_list_.size();
+    return static_cast<int>(id_to_state_list_.size());
   }
 
 protected:

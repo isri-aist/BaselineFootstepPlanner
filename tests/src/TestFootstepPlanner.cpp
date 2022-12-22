@@ -39,8 +39,8 @@ TEST(TestFootstepPlanner, Test1)
   }
 
   EXPECT_TRUE(planner->solution_.is_solved);
-  EXPECT_GE(planner->solution_.id_list.size(), 20);
-  EXPECT_LE(planner->solution_.id_list.size(), 25);
+  EXPECT_GE(static_cast<int>(planner->solution_.id_list.size()), 20);
+  EXPECT_LE(static_cast<int>(planner->solution_.id_list.size()), 25);
   // clang-format off
   EXPECT_TRUE((planner->solution_.state_list[0] == start_left_state &&
                planner->solution_.state_list[1] == start_right_state) ||

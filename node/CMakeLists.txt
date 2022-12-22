@@ -1,4 +1,4 @@
 add_executable(FootstepPlannerNode
-  FootstepPlannerNode.cpp FootstepEnvConfigRos.cpp)
+  FootstepPlannerNode.cpp)
 target_link_libraries(FootstepPlannerNode PRIVATE
   BaselineFootstepPlanner)

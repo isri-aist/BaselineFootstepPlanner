@@ -1,8 +1,14 @@
+if(DEFINED CATKIN_DEVEL_PREFIX)
+  set(ROS_DEPENDENT_SRCS FootstepEnvConfigRos.cpp)
+else()
+  set(ROS_DEPENDENT_SRCS "")
+endif()
 add_library(BaselineFootstepPlanner
   FootstepState.cpp
   FootstepEnv.cpp
   FootstepDijkstraPathHeuristic.cpp
   FootstepPlanner.cpp
+  ${ROS_DEPENDENT_SRCS}
 )
 if(DEFINED CATKIN_DEVEL_PREFIX)
   target_include_directories(BaselineFootstepPlanner PUBLIC

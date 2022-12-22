@@ -1,7 +1,7 @@
 # [BaselineFootstepPlanner](https://github.com/isri-aist/BaselineFootstepPlanner)
 Humanoid footstep planner based on baseline methods with graph search
 
-[![CI](https://github.com/isri-aist/BaselineFootstepPlanner/actions/workflows/ci.yaml/badge.svg)](https://github.com/isri-aist/BaselineFootstepPlanner/actions/workflows/ci.yaml)
+[![CI](https://github.com/isri-aist/BaselineFootstepPlanner/actions/workflows/ci-catkin.yaml/badge.svg)](https://github.com/isri-aist/BaselineFootstepPlanner/actions/workflows/ci-catkin.yaml)
 [![Documentation](https://img.shields.io/badge/doxygen-online-brightgreen?logo=read-the-docs&style=flat)](https://isri-aist.github.io/BaselineFootstepPlanner/)
 
 ## Install

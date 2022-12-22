@@ -13,8 +13,8 @@ FootstepDijkstraPathHeuristic::FootstepDijkstraPathHeuristic(FootstepEnv * env,
                                                              double divide_step,
                                                              std::array<double, 2> min,
                                                              std::array<int, 2> divide_num)
-: env_(env), divide_step_(divide_step), min_(min), divide_num_(divide_num),
-  planner_(std::make_shared<SBPL2DGridSearch>(divide_num[X], divide_num[Y], divide_step))
+: env_(env), planner_(std::make_shared<SBPL2DGridSearch>(divide_num[X], divide_num[Y], divide_step)),
+  divide_step_(divide_step), min_(min), divide_num_(divide_num)
 {
   printSettings();
 }
@@ -51,7 +51,7 @@ void FootstepDijkstraPathHeuristic::setupGridMap()
 
   // alloc map
   grid_map_ = new unsigned char *[width];
-  for(unsigned x = 0; x < width; x++)
+  for(int x = 0; x < width; x++)
   {
     grid_map_[x] = new unsigned char[height];
   }
@@ -157,7 +157,8 @@ int FootstepDijkstraPathHeuristic::calcHeuristic(int from_id, int to_id)
   double dist_xy = 1e-3 * planner_->getlowerboundoncostfromstart_inmm(gxy[X], gxy[Y]); // [m]
   double dist_theta =
       env_->discToContTheta(from_state->calcDistanceTheta(to_state, env_->config_->theta_divide_num)); // [rad]
-  int step_num = std::ceil(std::max((dist_xy / env_->step_xy_max_), (dist_theta / env_->step_theta_max_)));
+  int step_num =
+      static_cast<int>(std::ceil(std::max((dist_xy / env_->step_xy_max_), (dist_theta / env_->step_theta_max_))));
 
   return static_cast<int>(
       env_->config_->cost_scale
@@ -166,8 +167,8 @@ int FootstepDijkstraPathHeuristic::calcHeuristic(int from_id, int to_id)
 
 std::array<int, 2> FootstepDijkstraPathHeuristic::contToGrid(std::array<double, 2> cxy) const
 {
-  int gx = std::floor((cxy[X] - min_[X]) / divide_step_);
-  int gy = std::floor((cxy[Y] - min_[Y]) / divide_step_);
+  int gx = static_cast<int>(std::floor((cxy[X] - min_[X]) / divide_step_));
+  int gy = static_cast<int>(std::floor((cxy[Y] - min_[Y]) / divide_step_));
   return std::array<int, 2>{gx, gy};
 }
 

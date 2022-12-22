@@ -5,9 +5,8 @@
 #include <sensor_msgs/PointCloud.h>
 #include <baseline_footstep_planner/FootstepSequence2DStamped.h>
 
-#include <BaselineFootstepPlanner/MathUtils.h>
+#include <BaselineFootstepPlanner/FootstepEnvConfigRos.h>
 
-#include "FootstepEnvConfigRos.h"
 #include "FootstepPlannerNode.h"
 
 using namespace BFP;
@@ -101,7 +100,7 @@ void FootstepPlannerNode::publishFootstepSeq()
   {
     const std::shared_ptr<FootstepState> & state = planner_->env_->getStateFromId(planner_->solution_.id_list[i]);
     baseline_footstep_planner::Footstep2D & footstep_msg = footstep_seq_msg.sequence.footsteps[i];
-    footstep_msg.foot_lr = static_cast<int>(state->foot_);
+    footstep_msg.foot_lr = static_cast<char>(state->foot_);
     footstep_msg.foot_pose.x = planner_->env_->discToContXy(state->x_);
     footstep_msg.foot_pose.y = planner_->env_->discToContXy(state->y_);
     footstep_msg.foot_pose.theta = planner_->env_->discToContTheta(state->theta_);
@@ -125,9 +124,9 @@ void FootstepPlannerNode::publishExpandedStates()
   {
     const std::shared_ptr<FootstepState> & state = planner_->env_->getStateFromId(i);
     geometry_msgs::Point32 point;
-    point.x = planner_->env_->discToContXy(state->x_);
-    point.y = planner_->env_->discToContXy(state->y_);
-    point.z = -0.1;
+    point.x = static_cast<float>(planner_->env_->discToContXy(state->x_));
+    point.y = static_cast<float>(planner_->env_->discToContXy(state->y_));
+    point.z = -0.1f;
     cloud_msg.points.push_back(point);
   }
 
