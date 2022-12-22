@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.8)
 
 set(PROJECT_NAME baseline_footstep_planner)
 set(PROJECT_GENERATED_HEADERS_SKIP_DEPRECATED ON)
