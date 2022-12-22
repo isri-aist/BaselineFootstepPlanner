@@ -30,7 +30,8 @@ FootstepEnv::FootstepEnv(const std::shared_ptr<FootstepEnvConfig> & config)
   setupAction();
 }
 
-bool FootstepEnv::InitializeEnv(const char * sEnvFile)
+bool FootstepEnv::InitializeEnv(const char * // sEnvFile
+)
 {
   if((start_left_id_ == -1) || (start_right_id_ == -1) || (goal_left_id_ == -1) || (goal_right_id_ == -1))
   {
@@ -175,7 +176,7 @@ void FootstepEnv::clear()
 
 int FootstepEnv::contToDiscXy(double cx) const
 {
-  int x = std::round(cx / config_->xy_divide_step);
+  int x = static_cast<int>(std::round(cx / config_->xy_divide_step));
 
   return x;
 }
@@ -183,7 +184,7 @@ int FootstepEnv::contToDiscXy(double cx) const
 int FootstepEnv::contToDiscTheta(double ctheta) const
 {
   double theta_divide_step = 2 * M_PI / config_->theta_divide_num;
-  int theta = std::floor(radMod(ctheta) / theta_divide_step);
+  int theta = static_cast<int>(std::floor(radMod(ctheta) / theta_divide_step));
 
   // if (theta < 0 || theta >= config_->theta_divide_num) {
   //   throw std::runtime_error("Invalid theta in contToDiscTheta: " + std::to_string(theta));
@@ -396,8 +397,9 @@ int FootstepEnv::calcEuclideanHeuristic(int from_id, int to_id) const
   const std::shared_ptr<FootstepState> & from_state = id_to_state_list_[from_id];
   const std::shared_ptr<FootstepState> & to_state = id_to_state_list_[to_id];
   double dist_xy = discToContXy(from_state->calcDistanceXy(to_state)); // [m]
-  double dist_theta = discToContTheta(from_state->calcDistanceTheta(to_state, config_->theta_divide_num)); // [rad]
-  int step_num = std::ceil(std::max((dist_xy / step_xy_max_), (dist_theta / step_theta_max_)));
+  double dist_theta =
+      static_cast<int>(discToContTheta(from_state->calcDistanceTheta(to_state, config_->theta_divide_num))); // [rad]
+  int step_num = static_cast<int>(std::ceil(std::max((dist_xy / step_xy_max_), (dist_theta / step_theta_max_))));
 
   return static_cast<int>(config_->cost_scale
                           * (dist_xy + config_->cost_theta_scale * dist_theta + config_->step_cost * step_num));
@@ -488,7 +490,7 @@ int FootstepEnv::addStateIfNotExists(const std::shared_ptr<FootstepState> & stat
   {
     // create new state
     std::shared_ptr<FootstepState> new_state(state);
-    int new_id = id_to_state_list_.size();
+    int new_id = static_cast<int>(id_to_state_list_.size());
     new_state->id_ = new_id;
 
     // add to list
