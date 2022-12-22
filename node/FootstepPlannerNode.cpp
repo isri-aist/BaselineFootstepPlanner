@@ -5,9 +5,8 @@
 #include <sensor_msgs/PointCloud.h>
 #include <baseline_footstep_planner/FootstepSequence2DStamped.h>
 
-#include <BaselineFootstepPlanner/MathUtils.h>
+#include <BaselineFootstepPlanner/FootstepEnvConfigRos.h>
 
-#include "FootstepEnvConfigRos.h"
 #include "FootstepPlannerNode.h"
 
 using namespace BFP;
