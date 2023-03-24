@@ -73,6 +73,6 @@ public:
   std::shared_ptr<FootstepEnv> env_;
 
   //! Graph search
-  std::shared_ptr<ARAPlanner> serach_;
+  std::shared_ptr<ARAPlanner> search_;
 };
 } // namespace BFP

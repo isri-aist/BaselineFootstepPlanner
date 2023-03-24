@@ -15,7 +15,7 @@ void FootstepPlanner::Solution::reset()
 
 FootstepPlanner::FootstepPlanner(const std::shared_ptr<FootstepEnvConfig> & env_config)
 : env_config_(env_config), env_(std::make_shared<FootstepEnv>(env_config_)),
-  serach_(std::make_shared<ARAPlanner>(env_.get(), true))
+  search_(std::make_shared<ARAPlanner>(env_.get(), true))
 {
 }
 
@@ -26,7 +26,7 @@ bool FootstepPlanner::setStartGoal(const std::shared_ptr<FootstepState> & start_
 {
   // construct environment and planner
   env_ = std::make_shared<FootstepEnv>(env_config_);
-  serach_ = std::make_shared<ARAPlanner>(env_.get(), true);
+  search_ = std::make_shared<ARAPlanner>(env_.get(), true);
 
   // set start and goal
   if(!env_->setStart(start_left_state, start_right_state))
@@ -45,11 +45,11 @@ bool FootstepPlanner::setStartGoal(const std::shared_ptr<FootstepState> & start_
   env_->InitializeMDPCfg(&mdp_config);
 
   // setup planner
-  if(serach_->set_start(mdp_config.startstateid) == 0)
+  if(search_->set_start(mdp_config.startstateid) == 0)
   {
     throw std::runtime_error("Failed to set start state.");
   }
-  if(serach_->set_goal(mdp_config.goalstateid) == 0)
+  if(search_->set_goal(mdp_config.goalstateid) == 0)
   {
     throw std::runtime_error("Failed to set goal state.");
   }
@@ -68,9 +68,9 @@ bool FootstepPlanner::run(bool continue_until_solved, double max_planning_durati
   }
 
   // plan
-  serach_->set_initialsolution_eps(initial_heuristics_weight);
-  serach_->set_search_mode(continue_until_solved);
-  solution_.is_solved = serach_->replan(max_planning_duration, &solution_.id_list, &solution_.path_cost);
+  search_->set_initialsolution_eps(initial_heuristics_weight);
+  search_->set_search_mode(continue_until_solved);
+  solution_.is_solved = search_->replan(max_planning_duration, &solution_.id_list, &solution_.path_cost);
 
   // add the start and goal right footsteps because the only left footsteps are assumed to be start and goal
   if(solution_.id_list[1] != env_->start_right_id_)
@@ -87,7 +87,7 @@ bool FootstepPlanner::run(bool continue_until_solved, double max_planning_durati
   {
     solution_.state_list.push_back(env_->getStateFromId(solution_id));
   }
-  solution_.heuristics_weight = serach_->get_solution_eps();
+  solution_.heuristics_weight = search_->get_solution_eps();
 
   return solution_.is_solved;
 }
