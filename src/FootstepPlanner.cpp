@@ -72,6 +72,11 @@ bool FootstepPlanner::run(bool continue_until_solved, double max_planning_durati
   search_->set_search_mode(continue_until_solved);
   solution_.is_solved = search_->replan(max_planning_duration, &solution_.id_list, &solution_.path_cost);
 
+  if(!solution_.is_solved)
+  {
+    return false;
+  }
+
   // add the start and goal right footsteps because the only left footsteps are assumed to be start and goal
   if(solution_.id_list[1] != env_->start_right_id_)
   {
@@ -89,5 +94,5 @@ bool FootstepPlanner::run(bool continue_until_solved, double max_planning_durati
   }
   solution_.heuristics_weight = search_->get_solution_eps();
 
-  return solution_.is_solved;
+  return true;
 }
