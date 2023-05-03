@@ -2,7 +2,7 @@ theta_divide_num: 64
 xy_divide_step: 0.01 # [m]
 
 cost_scale: 1.0e3
-theta_scale: 0 # [m/rad]
+cost_theta_scale: 0 # [m/rad]
 step_cost: 1.0
 
 heuristic_type: DijkstraPath
