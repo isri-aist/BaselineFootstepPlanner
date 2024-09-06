@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace BFP
 {
 /** \brief Foot. */
