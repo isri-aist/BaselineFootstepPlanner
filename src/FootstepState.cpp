@@ -1,6 +1,6 @@
 /* Author: Masaki Murooka */
 
-#include <ros/console.h>
+#include <math.h>
 
 #include <BaselineFootstepPlanner/FootstepState.h>
 #include <BaselineFootstepPlanner/console.h>
