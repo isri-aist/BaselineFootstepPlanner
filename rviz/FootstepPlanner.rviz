@@ -131,7 +131,7 @@ Visualization Manager:
   Views:
     Current:
       Angle: 0
-      Class: rviz/TopDownOrtho
+      Class: rviz/XYOrbit
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -142,7 +142,7 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Scale: 234.76266479492188
       Target Frame: <Fixed Frame>
-      Value: TopDownOrtho (rviz)
+      Value: XYOrbit (rviz)
       X: 1.0013333559036255
       Y: 0.4193693995475769
     Saved: ~
