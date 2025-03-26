@@ -30,8 +30,6 @@ jobs:
         build-type: ${{ matrix.build-type }}
         ubuntu: |
           apt: libgtest-dev
-        ros: |
-          apt: sbpl
     - name: Clone SBPL repository
       run: git clone https://github.com/sbpl/sbpl.git
     - name: Build and test SBPL

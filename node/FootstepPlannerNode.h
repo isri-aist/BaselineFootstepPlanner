@@ -65,6 +65,5 @@ protected:
 
   //! Subscriber of goal pose
   rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr goal_pose_sub_;
-
 };
 } // namespace BFP

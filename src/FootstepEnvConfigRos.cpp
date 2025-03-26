@@ -8,7 +8,8 @@ using namespace BFP;
 
 FootstepEnvConfigRos::FootstepEnvConfigRos()
 {
-  rclcpp::Node::SharedPtr nh = std::make_shared<rclcpp::Node>("footstep_planner_env_config_ros");;
+  rclcpp::Node::SharedPtr nh = std::make_shared<rclcpp::Node>("footstep_planner_env_config_ros");
+  ;
 
   nh->declare_parameter<int>("theta_divide_num", theta_divide_num);
   nh->declare_parameter<double>("xy_divide_step", xy_divide_step);
@@ -42,10 +43,9 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
       throw std::invalid_argument("Invalid r2l_action_cont_list. Size of each element should be 3.");
     }
 
-    for(size_t i = 0; i < r2l_action_cont_list_param.size(); i+=3)
+    for(size_t i = 0; i < r2l_action_cont_list_param.size(); i += 3)
     {
-      r2l_action_cont_list.emplace_back(r2l_action_cont_list_param[i],
-                                        r2l_action_cont_list_param[i + 1],
+      r2l_action_cont_list.emplace_back(r2l_action_cont_list_param[i], r2l_action_cont_list_param[i + 1],
                                         r2l_action_cont_list_param[i + 2]);
     }
   }
@@ -61,9 +61,8 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
     {
       throw std::invalid_argument("Invalid r2l_reachable_min. Size of element should be 3.");
     }
-    r2l_reachable_min = FootstepActionCont(r2l_reachable_min_param[0],
-                                           r2l_reachable_min_param[1],
-                                           r2l_reachable_min_param[2]);
+    r2l_reachable_min =
+        FootstepActionCont(r2l_reachable_min_param[0], r2l_reachable_min_param[1], r2l_reachable_min_param[2]);
   }
   if(nh->has_parameter("r2l_reachable_max"))
   {
@@ -73,9 +72,8 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
     {
       throw std::invalid_argument("Invalid r2l_reachable_max. Size of element should be 3.");
     }
-    r2l_reachable_max = FootstepActionCont(r2l_reachable_max_param[0],
-                                           r2l_reachable_max_param[1],
-                                           r2l_reachable_max_param[2]);
+    r2l_reachable_max =
+        FootstepActionCont(r2l_reachable_max_param[0], r2l_reachable_max_param[1], r2l_reachable_max_param[2]);
   }
 
   if(nh->has_parameter("rect_obstacle_list"))
@@ -89,11 +87,10 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
       throw std::invalid_argument("Invalid rect_obstacle_list. Size of each element should be 4.");
     }
 
-    for(size_t i = 0; i < rect_obst_list_param.size(); i+=4)
+    for(size_t i = 0; i < rect_obst_list_param.size(); i += 4)
     {
-      rect_obst_list.emplace_back(
-          rect_obst_list_param[i], rect_obst_list_param[i+1],
-          rect_obst_list_param[i+2], rect_obst_list_param[i+3]);
+      rect_obst_list.emplace_back(rect_obst_list_param[i], rect_obst_list_param[i + 1], rect_obst_list_param[i + 2],
+                                  rect_obst_list_param[i + 3]);
     }
   }
   std::ostringstream number_of_obstacles;

@@ -15,11 +15,13 @@ FootstepPlannerNode::FootstepPlannerNode()
 {
   planner_ = std::make_shared<FootstepPlanner>(std::make_shared<FootstepEnvConfigRos>());
 
-  footstep_seq_pub_ = nh_->create_publisher<baseline_footstep_planner::msg::FootstepSequence2DStamped>("footstep_sequence", 1);
+  footstep_seq_pub_ =
+      nh_->create_publisher<baseline_footstep_planner::msg::FootstepSequence2DStamped>("footstep_sequence", 1);
   expanded_states_pub_ = nh_->create_publisher<sensor_msgs::msg::PointCloud>("expanded_states", 1);
-  start_pose_sub_ =
-      nh_->create_subscription<geometry_msgs::msg::Pose2D>("start_pose", 1, std::bind(&FootstepPlannerNode::startPoseCallback, this, std::placeholders::_1));
-  goal_pose_sub_ = nh_->create_subscription<geometry_msgs::msg::Pose2D>("goal_pose", 1, std::bind(&FootstepPlannerNode::goalPoseCallback, this, std::placeholders::_1));
+  start_pose_sub_ = nh_->create_subscription<geometry_msgs::msg::Pose2D>(
+      "start_pose", 1, std::bind(&FootstepPlannerNode::startPoseCallback, this, std::placeholders::_1));
+  goal_pose_sub_ = nh_->create_subscription<geometry_msgs::msg::Pose2D>(
+      "goal_pose", 1, std::bind(&FootstepPlannerNode::goalPoseCallback, this, std::placeholders::_1));
 
   if(nh_->has_parameter("start_pose"))
   {
@@ -60,10 +62,12 @@ void FootstepPlannerNode::run()
     {
       publishFootstepSeq();
 
-      RCLCPP_INFO(nh_->get_logger(), "[FootstepPlannerNode] New path found. time: %.2lf, cost: %d, eps: %.2lf, footsteps num: %ld, expanded "
-               "states: %d.",
-               accumulated_duration_, planner_->solution_.path_cost, planner_->solution_.heuristics_weight,
-               planner_->solution_.id_list.size(), planner_->env_->stateNum());
+      RCLCPP_INFO(
+          nh_->get_logger(),
+          "[FootstepPlannerNode] New path found. time: %.2lf, cost: %d, eps: %.2lf, footsteps num: %ld, expanded "
+          "states: %d.",
+          accumulated_duration_, planner_->solution_.path_cost, planner_->solution_.heuristics_weight,
+          planner_->solution_.id_list.size(), planner_->env_->stateNum());
     }
     publishExpandedStates();
 
