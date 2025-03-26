@@ -92,7 +92,14 @@ jobs:
             apt: ros-base
       - name: Check ROS Distro
         run: echo "ROS_DISTRO=$ROS_DISTRO"
-
+      - name: Clone SBPL repository
+        run: git clone https://github.com/sbpl/sbpl.git
+      - name: Build and test SBPL
+        uses: jrl-umi3218/github-actions/build-cmake-project@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: ${{ matrix.build-type }}
+          project-dir: sbpl
       - name: Colcon build baseline_footstep_planner
         uses: jrl-umi3218/github-actions/build-colcon-project@master
         with:

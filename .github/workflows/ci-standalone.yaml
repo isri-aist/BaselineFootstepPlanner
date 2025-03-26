@@ -32,8 +32,16 @@ jobs:
           apt: libgtest-dev
         ros: |
           apt: sbpl
-    - name: Build and test
+    - name: Clone SBPL repository
+      run: git clone https://github.com/sbpl/sbpl.git
+    - name: Build and test SBPL
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
+        project-dir: sbpl
+    # - name: Build and test
+    #   uses: jrl-umi3218/github-actions/build-cmake-project@master
+    #   with:
+    #     compiler: ${{ matrix.compiler }}
+    #     build-type: ${{ matrix.build-type }}
