@@ -1,4 +1,4 @@
-if(NOT DEFINED USE_ROS2)
+if(NOT USE_ROS2)
   find_package(GTest REQUIRED)
   include(GoogleTest)
   function(add_BFP_test NAME)

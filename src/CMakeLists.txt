@@ -1,4 +1,4 @@
-if(DEFINED USE_ROS2)
+if(USE_ROS2)
   set(ROS_DEPENDENT_SRCS FootstepEnvConfigRos.cpp)
 else()
   set(ROS_DEPENDENT_SRCS "")
@@ -10,7 +10,7 @@ add_library(BaselineFootstepPlanner
   FootstepPlanner.cpp
   ${ROS_DEPENDENT_SRCS}
 )
-if(DEFINED USE_ROS2)
+if(USE_ROS2)
   target_include_directories(BaselineFootstepPlanner PUBLIC
     ${ament_INCLUDE_DIRS}
     )
@@ -28,7 +28,7 @@ target_include_directories(BaselineFootstepPlanner PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-if(DEFINED USE_ROS2)
+if(USE_ROS2)
   rosidl_get_typesupport_target(cpp_typesupport_target 
   ${PROJECT_NAME} "rosidl_typesupport_cpp")
   target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target} ${ament_LIBRARIES})
