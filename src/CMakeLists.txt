@@ -27,9 +27,13 @@ target_include_directories(BaselineFootstepPlanner PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-rosidl_get_typesupport_target(cpp_typesupport_target 
-${PROJECT_NAME} "rosidl_typesupport_cpp")
-target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target} ${ament_LIBRARIES})
+
+if(DEFINED USE_ROS2)
+  rosidl_get_typesupport_target(cpp_typesupport_target 
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+  target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target} ${ament_LIBRARIES})
+endif()
+
 target_link_libraries(BaselineFootstepPlanner PUBLIC PkgConfig::SBPL)
 target_compile_features(BaselineFootstepPlanner PUBLIC cxx_std_17)
 
