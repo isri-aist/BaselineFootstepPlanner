@@ -3,6 +3,7 @@ find_package(Doxygen REQUIRED)
 if(DOXYGEN_FOUND)
   set(DOXYFILE_PATH ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
+  # Change DOXYGEN_HTML_OUTPUT in ros2
   if (USE_ROS2)
     set(DOXYGEN_HTML_OUTPUT doxygen-html)
   endif()
