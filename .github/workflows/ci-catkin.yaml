@@ -76,7 +76,7 @@ jobs:
         run: |
           set -e
           set -x
-          cd ${GITHUB_WORKSPACE}/colcon_ws/src/BaselineFootstepPlanner
+          cd ${GITHUB_WORKSPACE}/colcon_ws/src/${{ github.repository }}
           git config --global user.name "Nguyen Minh Tuan"
           git config --global user.email "nguyen.minhtuan@hachi-x.com"
           git remote set-url origin "https://nqtabokado:${{ secrets.CI_TOKEN }}@github.com/nqtabokado/BaselineFootstepPlanner"
