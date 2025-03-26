@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <sbpl/headers.h>
+#include <array>
 
 namespace BFP
 {

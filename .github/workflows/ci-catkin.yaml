@@ -72,7 +72,7 @@ jobs:
           test-packages: baseline_footstep_planner
       - name: Upload documentation
         # Only run for one configuration and on origin master branch
-        if: matrix.os == 'ubuntu-20.04' && matrix.build-type == 'RelWithDebInfo' && github.repository_owner == 'isri-aist' && github.ref == 'refs/heads/master'
+        if: env.UPLOAD_DOCUMENTATION == 'true'        
         run: |
           set -e
           set -x
