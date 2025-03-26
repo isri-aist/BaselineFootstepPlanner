@@ -10,13 +10,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(PROJECT_USE_CMAKE_EXPORT TRUE)
 set(CXX_DISABLE_WERROR ON)
 option(INSTALL_DOCUMENTATION "Generate and install the documentation" OFF)
+option(USE_ROS2 "Use ROS2" OFF)
 
 include(cmake/base.cmake)
 
 project(${PROJECT_NAME} LANGUAGES CXX C)
 
-if(DEFINED USE_ROS2)
-  set(DOXYGEN_HTML_OUTPUT html)
+if(USE_ROS2)
   find_package(ament_cmake REQUIRED)
   find_package(rclcpp REQUIRED)
   find_package(std_msgs REQUIRED)
@@ -24,20 +24,19 @@ if(DEFINED USE_ROS2)
   find_package(sensor_msgs REQUIRED)
   find_package(rosidl_default_generators REQUIRED)
 else()
-  set(DOXYGEN_HTML_OUTPUT doxygen-html)
   option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
 endif()
 
 # SBPL
 find_package(PkgConfig)
 pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)
-if(NOT DEFINED USE_ROS2)
+if(NOT USE_ROS2)
   set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
 find_package(PkgConfig)
 pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)")
 endif()
 
-if(DEFINED USE_ROS2)
+if(USE_ROS2)
   set(msg_files
     "msg/Footstep2D.msg"
     "msg/FootstepSequence2D.msg"
@@ -57,7 +56,7 @@ endif()
 
 add_subdirectory(src)
 
-if(DEFINED USE_ROS2)
+if(USE_ROS2)
   add_subdirectory(node)
 endif()
 
