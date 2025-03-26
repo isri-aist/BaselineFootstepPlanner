@@ -29,7 +29,12 @@ jobs:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
         ubuntu: |
-          apt: libgtest-dev
+          apt: libgtest-dev clang-14
+    - name: Set Clang 14 as default
+      run: |
+        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 100
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-14 100
+        clang --version  # Kiểm tra phiên bản
     - name: Clone sbpl repository
       run: git clone https://github.com/sbpl/sbpl.git
     - name: Build and test sbpl
