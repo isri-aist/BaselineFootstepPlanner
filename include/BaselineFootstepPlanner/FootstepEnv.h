@@ -387,6 +387,8 @@ protected:
   /** \brief Maximum footstep distance
 
       This is calculated from ::Configuration::r2l_action_cont_list automatically.
+
+      @{ 
   */
   double step_xy_max_;
   double step_theta_max_;

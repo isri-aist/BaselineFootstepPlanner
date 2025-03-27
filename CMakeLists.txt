@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.14)
 
 set(PROJECT_NAME baseline_footstep_planner)
 set(PROJECT_GENERATED_HEADERS_SKIP_DEPRECATED ON)
@@ -47,11 +47,6 @@ if(USE_ROS2)
     ${msg_files}
     DEPENDENCIES std_msgs geometry_msgs
   )
-
-  ament_export_dependencies(rclcpp rosidl_default_runtime std_msgs geometry_msgs sensor_msgs SBPL)
-  ament_export_include_directories(include)
-  ament_export_libraries(BaselineFootstepPlanner)
-  ament_package()
 endif()
 
 add_subdirectory(src)
@@ -66,4 +61,11 @@ endif()
 
 if(INSTALL_DOCUMENTATION)
   add_subdirectory(doc)
+endif()
+
+if(USE_ROS2)
+  ament_export_dependencies(rclcpp rosidl_default_runtime std_msgs geometry_msgs sensor_msgs SBPL)
+  ament_export_include_directories(include)
+  ament_export_libraries(BaselineFootstepPlanner)
+  ament_package()
 endif()
