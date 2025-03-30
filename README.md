@@ -23,7 +23,7 @@ It is assumed that ROS is installed.
 $ mkdir -p ~/ros/ws_bfp/src
 $ cd ~/ros/ws_bfp
 $ wstool init src
-$ wstool set -t src isri-aist/BaselineFootstepPlanner git@github.com:isri-aist/BaselineFootstepPlanner.git --git -y
+$ wstool set -t src isri-aist/BaselineFootstepPlanner https://github.com/isri-aist/BaselineFootstepPlanner.git --git -y
 $ wstool update -t src
 ```
 
