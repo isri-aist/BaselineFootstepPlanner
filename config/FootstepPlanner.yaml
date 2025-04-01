@@ -23,8 +23,14 @@ r2l_action_cont_list: # [m], [rad]
 r2l_reachable_min: [-0.05, 0.0, -0.1745] # [m], [rad]
 r2l_reachable_max: [0.1, 0.05, 0.1745] # [m], [rad]
 
-rect_obstacle_list: # [m]
+# [center_x, center_y, half_length_x, half_length_y]
+rect_obstacle_list:
   [
-  [1.0, 0, 0.2, 1.0],
-  [0, 1.0, 1.0, 0.2]
+    [-2.5, 0.0, 0.2, 1.0],  # 왼쪽 벽
+    [2.5, 0.0, 0.2, 2.5],   # 오른쪽 벽
+    [0.0, -2.5, 2.5, 0.2],  # 위쪽 벽
+    [0.0, 2.5, 2.5, 0.2],   # 아래쪽 벽
+    
+    [-4, 0.0, 0.2, 4],  # 왼쪽 벽
+    
   ]

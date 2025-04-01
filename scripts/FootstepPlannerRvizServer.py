@@ -178,7 +178,7 @@ class FootstepPlannerRvizServer(object):
             obst_marker.color = ColorRGBA(0.2, 0.2, 0.8, 0.5)
             obst_marker.scale.x = 2 * rect_half_length[0]
             obst_marker.scale.y = 2 * rect_half_length[1]
-            obst_marker.scale.z = 0.01
+            obst_marker.scale.z = 0.02
             obst_marker.pose = toPoseMsg([rect_center[0], rect_center[1], 0], z=-0.01)
             obsts_marker_arr.markers.append(obst_marker)
 
