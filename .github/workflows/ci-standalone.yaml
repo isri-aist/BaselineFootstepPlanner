@@ -32,6 +32,10 @@ jobs:
           apt: libgtest-dev
     - name: Clone sbpl repository
       run: git clone https://github.com/sbpl/sbpl.git
+    - name: Install CMake 3.22.1
+      run: |
+        wget https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.sh
+        sudo bash cmake-3.22.1-linux-x86_64.sh --prefix=/usr/local --exclude-subdir
     - name: Check CMake Version
       run: cmake --version
     - name: Build and test sbpl
