@@ -2,7 +2,7 @@
 
 import copy
 import numpy as np
-
+from rclpy.node import Node
 import rclpy
 import ast
 # from tf import transformations
@@ -27,32 +27,34 @@ def toPoseMsg(pose_2d, z=0.0):
     ori.x, ori.y, ori.z, ori.w = quaternion_from_euler(0.0, 0.0, pose_2d[2])
     return pose_msg
 
-class FootstepPlannerRvizServer(object):
+class FootstepPlannerRvizServer(Node):
     """"Node to manage ROS topics for Rviz."""
-    def __init__(self, node):
-        self.node = node
+    def __init__(self):
+        super().__init__('footstep_planner_rviz_server')
         # get param
-        self.nominal_foot_separation = self.node.declare_parameter("nominal_foot_separation", 0.3).value # [m]
-        self.foot_size = self.node.declare_parameter("foot_size", [0.15, 0.075]).value # [m]
+        self.nominal_foot_separation = self.declare_parameter("nominal_foot_separation", 0.3).value # [m]
+        self.foot_size = self.declare_parameter("foot_size", [0.15, 0.075]).value # [m]
         self.setupRectObstList()
-
+        self.timer = self.create_timer(1.0, self.publishObstMarkerArray)
         # setup marker
         self.setupInteractiveMarker()
 
         # setup subscriber
-        self.footstep_seq_sub = self.node.create_subscription(
+        self.footstep_seq_sub = self.create_subscription(
             FootstepSequence2DStamped, "footstep_sequence", self.footstepSeqCallback, 1)
 
         # setup publisher
-        self.start_pose_pub = self.node.create_publisher(Pose2D, "start_pose", 1)
-        self.goal_pose_pub = self.node.create_publisher(Pose2D, "goal_pose", 1)
-        self.footstep_seq_marker_pub = self.node.create_publisher(MarkerArray, "footstep_sequence_marker", 1)
-        self.footstep_obsts_marker_pub = self.node.create_publisher(MarkerArray, "footstep_obstacles_marker", 1)
+        self.start_pose_pub = self.create_publisher(Pose2D, "start_pose", 1)
+        self.goal_pose_pub = self.create_publisher(Pose2D, "goal_pose", 1)
+        self.footstep_seq_marker_pub = self.create_publisher(MarkerArray, "footstep_sequence_marker", 1)
+        self.footstep_obsts_marker_pub = self.create_publisher(MarkerArray, "footstep_obstacles_marker", 1)
 
     def setupRectObstList(self):
         self.rect_obst_list = []
-        rect_obstacle_string = self.node.declare_parameter("rect_obstacle_list", "").value
-        for rect_obst_param in ast.literal_eval(rect_obstacle_string):
+        rect_obstacle_string = self.declare_parameter("rect_obstacle_list", "").value
+        rect_obstacle_list = ast.literal_eval(rect_obstacle_string)
+
+        for rect_obst_param in rect_obstacle_list:
             self.rect_obst_list.append(np.array(rect_obst_param))
 
     def setupInteractiveMarker(self):
@@ -60,7 +62,7 @@ class FootstepPlannerRvizServer(object):
         self.both_foot_markers = self._makeBothFootMarkers()
 
         # make server
-        self.im_server = InteractiveMarkerServer(self.node, "footstep_planner")
+        self.im_server = InteractiveMarkerServer(self, "footstep_planner")
 
         # add start
         self.im_server.insert(
@@ -158,7 +160,7 @@ class FootstepPlannerRvizServer(object):
                 self.goal_pose_pub.publish(pose_msg)
 
     def publishObstMarkerArray(self):
-        stamp_now = self.node.get_clock().now().to_msg()
+        stamp_now = self.get_clock().now().to_msg()
 
         # instantiate marker array
         obsts_marker_arr = MarkerArray()
@@ -225,26 +227,23 @@ class FootstepPlannerRvizServer(object):
         # LINE_STRIP has a problem in visualization (line thickness is not constant depending on the viewpoint)
         lines_marker.color = ColorRGBA(r=0.2, g=0.2, b=0.2, a=0.5)
         lines_marker.scale.x = 0.01 # line width
-        lines_marker.pose.orientation = Quaternion(0, 0, 0, 1)
+        lines_marker.pose.orientation = Quaternion(x=0.0, y=0.0, z=0.0, w=1.0)
         for i in range(len(footstep_seq_msg.sequence.footsteps) - 1):
             current_pose = footstep_seq_msg.sequence.footsteps[i].foot_pose
             next_pose = footstep_seq_msg.sequence.footsteps[i + 1].foot_pose
-            lines_marker.points.append(Point(current_pose.x, current_pose.y, 0))
-            lines_marker.points.append(Point(next_pose.x, next_pose.y, 0))
+            lines_marker.points.append(Point(x=current_pose.x, y=current_pose.y, z=0.0))
+            lines_marker.points.append(Point(x=next_pose.x, y=next_pose.y, z=0.0))
         seq_marker_arr.markers.append(lines_marker)
 
         # publish marker array
         self.footstep_seq_marker_pub.publish(seq_marker_arr)
 
     def spin(self):
-        self.publishObstMarkerArray()
-        rclpy.spin(self.node)
+        rclpy.spin(self)
 
 
 if __name__ == "__main__":
     rclpy.init()
-    node = rclpy.create_node('footstep_planner_rviz_server')
-
-    rviz_server = FootstepPlannerRvizServer(node)
-
+    rviz_server = FootstepPlannerRvizServer()
     rviz_server.spin()
+    rclpy.shutdown()

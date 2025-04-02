@@ -13,13 +13,28 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
 
   nh->declare_parameter<int>("theta_divide_num", theta_divide_num);
   nh->declare_parameter<double>("xy_divide_step", xy_divide_step);
+  RCLCPP_INFO(nh->get_logger(), "[footstep_planner_env_config_ros] xy_divide_step: %f", xy_divide_step);
 
   nh->declare_parameter<double>("cost_scale", cost_scale);
   nh->declare_parameter<double>("cost_theta_scale", cost_theta_scale);
   nh->declare_parameter<double>("step_cost", step_cost);
 
+  nh->declare_parameter<std::string>("heuristic_type", "DijkstraPath");
+
+  nh->declare_parameter<std::vector<double>>("r2l_action_cont_list", {
+      0.2, 0.0, 0.0, -0.1, 0.0, 0.0, 0.0, 0.1, 0.0,
+      0.0, -0.05, 0.0, 0.0, 0.0, 0.349, 0.0, 0.0, -0.349
+  });  
+  nh->declare_parameter<std::vector<double>>("r2l_reachable_min", {-0.05, 0.0, -0.1745});
+
+  nh->declare_parameter<std::vector<double>>("r2l_reachable_max", {0.1, 0.05, 0.1745});
+
+  std::vector<double> rect_obst_list_param;
+  nh->declare_parameter<std::vector<double>>("rect_obstacle_list", {1.0, 0.0, 0.2, 1.0, 0.0, 1.0, 1.0, 0.2}); 
+
   if(nh->has_parameter("heuristic_type"))
   {
+    RCLCPP_INFO(nh->get_logger(), "[footstep_planner_env_config_ros] Have heuristic_type");
     std::string heuristic_type_str;
     nh->get_parameter("heuristic_type", heuristic_type_str);
     heuristic_type = strToHeuristicType(heuristic_type_str);
@@ -34,6 +49,8 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
 
   if(nh->has_parameter("r2l_action_cont_list"))
   {
+    RCLCPP_INFO(nh->get_logger(), "[footstep_planner_env_config_ros] Have r2l_action_cont_list");
+
     r2l_action_cont_list.clear();
     std::vector<double> r2l_action_cont_list_param;
     nh->get_parameter("r2l_action_cont_list", r2l_action_cont_list_param);
@@ -43,10 +60,14 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
       throw std::invalid_argument("Invalid r2l_action_cont_list. Size of each element should be 3.");
     }
 
-    for(size_t i = 0; i < r2l_action_cont_list_param.size(); i += 3)
+    r2l_action_cont_list.reserve(r2l_action_cont_list_param.size() / 3);
+
+    for (size_t i = 0; i < r2l_action_cont_list_param.size(); i += 3) 
     {
-      r2l_action_cont_list.emplace_back(r2l_action_cont_list_param[i], r2l_action_cont_list_param[i + 1],
-                                        r2l_action_cont_list_param[i + 2]);
+        r2l_action_cont_list.emplace_back(
+            r2l_action_cont_list_param[i], r2l_action_cont_list_param[i + 1], 
+            r2l_action_cont_list_param[i + 2]
+        );
     }
   }
   std::ostringstream number_of_action;
@@ -55,6 +76,7 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
 
   if(nh->has_parameter("r2l_reachable_min"))
   {
+    RCLCPP_INFO(nh->get_logger(), "[footstep_planner_env_config_ros] Have r2l_reachable_min");
     std::vector<double> r2l_reachable_min_param;
     nh->get_parameter("r2l_reachable_min", r2l_reachable_min_param);
     if(r2l_reachable_min_param.size() != 3)
@@ -66,6 +88,8 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
   }
   if(nh->has_parameter("r2l_reachable_max"))
   {
+    RCLCPP_INFO(nh->get_logger(), "[footstep_planner_env_config_ros] Have r2l_reachable_max");
+
     std::vector<double> r2l_reachable_max_param;
     nh->get_parameter("r2l_reachable_max", r2l_reachable_max_param);
     if(r2l_reachable_max_param.size() != 3)
@@ -76,24 +100,36 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
         FootstepActionCont(r2l_reachable_max_param[0], r2l_reachable_max_param[1], r2l_reachable_max_param[2]);
   }
 
-  if(nh->has_parameter("rect_obstacle_list"))
-  {
-    rect_obst_list.clear();
-    std::vector<double> rect_obst_list_param;
-    nh->get_parameter("rect_obstacle_list", rect_obst_list_param);
+  if (nh->has_parameter("rect_obstacle_list")) 
+{
+    RCLCPP_INFO(nh->get_logger(), "[footstep_planner_env_config_ros] Have rect_obstacle_list");
 
-    if(rect_obst_list_param.size() % 4 != 0)
+    rect_obst_list.clear();
+
+    // Kiểm tra nếu lấy được parameter thành công
+    if (!nh->get_parameter("rect_obstacle_list", rect_obst_list_param)) 
     {
-      throw std::invalid_argument("Invalid rect_obstacle_list. Size of each element should be 4.");
+        RCLCPP_ERROR(nh->get_logger(), "[footstep_planner_env_config_ros] Failed to get parameter 'rect_obstacle_list'");
+        return;
     }
 
-    for(size_t i = 0; i < rect_obst_list_param.size(); i += 4)
+    // Kiểm tra số phần tử có chia hết cho 4 không
+    if (rect_obst_list_param.size() % 4 != 0) 
     {
-      rect_obst_list.emplace_back(rect_obst_list_param[i], rect_obst_list_param[i + 1], rect_obst_list_param[i + 2],
-                                  rect_obst_list_param[i + 3]);
+        RCLCPP_ERROR(nh->get_logger(), "[footstep_planner_env_config_ros] Invalid rect_obstacle_list. Size must be a multiple of 4, got %zu", rect_obst_list_param.size());
+        return;
+    }
+
+    // Đảm bảo biến được khai báo trước khi sử dụng
+    rect_obst_list.reserve(rect_obst_list_param.size() / 4);
+
+    // Chuyển đổi dữ liệu từ danh sách 1D sang 2D
+    for (size_t i = 0; i < rect_obst_list_param.size(); i += 4) 
+    {
+        rect_obst_list.emplace_back(
+            rect_obst_list_param[i], rect_obst_list_param[i + 1], 
+            rect_obst_list_param[i + 2], rect_obst_list_param[i + 3]
+        );
     }
   }
-  std::ostringstream number_of_obstacles;
-  number_of_obstacles << "[FootstepEnvConfigRos] Number of obstacles: " << rect_obst_list.size();
-  RCLCPP_INFO(nh->get_logger(), "%s", number_of_obstacles.str().c_str());
 }

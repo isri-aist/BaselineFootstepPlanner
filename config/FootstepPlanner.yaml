@@ -1,4 +1,4 @@
-foot_step_planner:
+footstep_planner_rviz_server:
   ros__parameters:
     theta_divide_num: 64
     xy_divide_step: 0.01 # [m]
