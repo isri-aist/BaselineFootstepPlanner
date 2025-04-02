@@ -22,16 +22,13 @@ FootstepPlannerNode::FootstepPlannerNode()
       "start_pose", 1, std::bind(&FootstepPlannerNode::startPoseCallback, this, std::placeholders::_1));
   goal_pose_sub_ = nh_->create_subscription<geometry_msgs::msg::Pose2D>(
       "goal_pose", 1, std::bind(&FootstepPlannerNode::goalPoseCallback, this, std::placeholders::_1));
-  RCLCPP_INFO(nh_->get_logger(), "[FootstepPlannerNode] Debug");
-  nh_->declare_parameter<std::vector<double>>("start_pose", {0.0, 0.0, 0.0});
-  nh_->declare_parameter<std::vector<double>>("goal_pose", {2.0, 1.5, 0.0});
+  nh_->declare_parameter<std::vector<double>>("start_pose", std::vector<double>(3, 0.0));
+  nh_->declare_parameter<std::vector<double>>("goal_pose", std::vector<double>(3, 0.0));
 
   if(nh_->has_parameter("start_pose"))
   {
     std::vector<double> start_pose_vec(3);
     nh_->get_parameter("start_pose", start_pose_vec);
-    RCLCPP_INFO(nh_->get_logger(), "[FootstepPlannerNode] Start pose: [%f, %f, %f]",
-                start_pose_vec[0], start_pose_vec[1], start_pose_vec[2]);
     std::copy(start_pose_vec.begin(), start_pose_vec.end(), start_pose_.begin());
   }
   if(nh_->has_parameter("goal_pose"))
