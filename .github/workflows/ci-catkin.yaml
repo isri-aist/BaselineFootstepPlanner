@@ -57,6 +57,8 @@ jobs:
         run: echo "ROS_DISTRO=$ROS_DISTRO"
       - name: Clone SBPL repository
         run: git clone https://github.com/sbpl/sbpl.git
+      - name: Check CMake Version
+        run: cmake --version
       - name: Build and test SBPL
         uses: jrl-umi3218/github-actions/build-cmake-project@master
         with:

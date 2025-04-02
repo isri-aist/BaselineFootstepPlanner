@@ -32,6 +32,8 @@ jobs:
           apt: libgtest-dev
     - name: Clone sbpl repository
       run: git clone https://github.com/sbpl/sbpl.git
+    - name: Check CMake Version
+      run: cmake --version
     - name: Build and test sbpl
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
