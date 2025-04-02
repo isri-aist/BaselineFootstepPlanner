@@ -17,13 +17,13 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
   nh->declare_parameter<double>("cost_theta_scale", cost_theta_scale);
   nh->declare_parameter<double>("step_cost", step_cost);
 
-  nh->declare_parameter<std::string>("heuristic_type", "default"); 
-  nh->declare_parameter<std::vector<double>>("r2l_action_cont_list", std::vector<double>(18, 0.0));  
+  nh->declare_parameter<std::string>("heuristic_type", "default");
+  nh->declare_parameter<std::vector<double>>("r2l_action_cont_list", std::vector<double>(18, 0.0));
   nh->declare_parameter<std::vector<double>>("r2l_reachable_min", std::vector<double>(3, 0.0));
   nh->declare_parameter<std::vector<double>>("r2l_reachable_max", std::vector<double>(3, 0.0));
 
   std::vector<double> rect_obst_list_param;
-  nh->declare_parameter<std::vector<double>>("rect_obstacle_list", std::vector<double>(8, 0.0)); 
+  nh->declare_parameter<std::vector<double>>("rect_obstacle_list", std::vector<double>(8, 0.0));
 
   if(nh->has_parameter("heuristic_type"))
   {
@@ -51,12 +51,10 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
 
     r2l_action_cont_list.reserve(r2l_action_cont_list_param.size() / 3);
 
-    for (size_t i = 0; i < r2l_action_cont_list_param.size(); i += 3) 
+    for(size_t i = 0; i < r2l_action_cont_list_param.size(); i += 3)
     {
-        r2l_action_cont_list.emplace_back(
-            r2l_action_cont_list_param[i], r2l_action_cont_list_param[i + 1], 
-            r2l_action_cont_list_param[i + 2]
-        );
+      r2l_action_cont_list.emplace_back(r2l_action_cont_list_param[i], r2l_action_cont_list_param[i + 1],
+                                        r2l_action_cont_list_param[i + 2]);
     }
   }
   std::ostringstream number_of_action;
@@ -84,25 +82,23 @@ FootstepEnvConfigRos::FootstepEnvConfigRos()
         FootstepActionCont(r2l_reachable_max_param[0], r2l_reachable_max_param[1], r2l_reachable_max_param[2]);
   }
 
-  if (nh->has_parameter("rect_obstacle_list")) 
-{
+  if(nh->has_parameter("rect_obstacle_list"))
+  {
     rect_obst_list.clear();
     nh->get_parameter("rect_obstacle_list", rect_obst_list_param);
 
-    if (rect_obst_list_param.size() % 4 != 0) 
+    if(rect_obst_list_param.size() % 4 != 0)
     {
-        RCLCPP_ERROR(nh->get_logger(), "Invalid rect_obstacle_list. Size of each element should be 4.");
-        return;
+      RCLCPP_ERROR(nh->get_logger(), "Invalid rect_obstacle_list. Size of each element should be 4.");
+      return;
     }
 
     rect_obst_list.reserve(rect_obst_list_param.size() / 4);
 
-    for (size_t i = 0; i < rect_obst_list_param.size(); i += 4) 
+    for(size_t i = 0; i < rect_obst_list_param.size(); i += 4)
     {
-        rect_obst_list.emplace_back(
-            rect_obst_list_param[i], rect_obst_list_param[i + 1], 
-            rect_obst_list_param[i + 2], rect_obst_list_param[i + 3]
-        );
+      rect_obst_list.emplace_back(rect_obst_list_param[i], rect_obst_list_param[i + 1], rect_obst_list_param[i + 2],
+                                  rect_obst_list_param[i + 3]);
     }
   }
 }

@@ -53,12 +53,12 @@ jobs:
           build-type: ${{ matrix.build-type }}
           ros: |
             apt: ros-base
-      - name: Check ROS Distro
-        run: echo "ROS_DISTRO=$ROS_DISTRO"
+      - name: Install CMake 3.22.1
+        run: |
+          wget https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.sh
+          sudo bash cmake-3.22.1-linux-x86_64.sh --prefix=/usr/local --exclude-subdir
       - name: Clone SBPL repository
         run: git clone https://github.com/sbpl/sbpl.git
-      - name: Check CMake Version
-        run: cmake --version
       - name: Build and test SBPL
         uses: jrl-umi3218/github-actions/build-cmake-project@master
         with:
