@@ -121,12 +121,14 @@ void FootstepDijkstraPathHeuristic::setupPathDistance(int start_id, int goal_id)
       }
       ofs_path << std::endl;
     }
-    BFP_INFO_STREAM("Run the following commands in Python to visualize Dijkstra distance field:\n"
-                    << "  import numpy as np\n"
-                    << "  import matplotlib.pyplot as plt\n"
-                    << "  dist_field = np.loadtxt(\"" << dijkstra_filename << "\")\n"
-                    << "  plt.imshow(dist_field, origin=\"lower\", interpolation=\"none\")\n"
-                    << "  plt.show()");
+    std::stringstream ss;
+    ss << "Run the following commands in Python to visualize Dijkstra distance field:\n"
+       << "  import numpy as np\n"
+       << "  import matplotlib.pyplot as plt\n"
+       << "  dist_field = np.loadtxt(\"" << dijkstra_filename << "\")\n"
+       << "  plt.imshow(dist_field, origin=\"lower\", interpolation=\"none\")\n"
+       << "  plt.show()";
+    BFP_INFO_STREAM(ss.str());
   }
 }
 

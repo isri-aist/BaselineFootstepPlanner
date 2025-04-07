@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-22.04]
         build-type: [Debug, RelWithDebInfo]
         compiler: [gcc, clang]
     runs-on: ${{ matrix.os }}
@@ -30,9 +30,19 @@ jobs:
         build-type: ${{ matrix.build-type }}
         ubuntu: |
           apt: libgtest-dev
-        ros: |
-          apt: sbpl
-    - name: Build and test
+    - name: Install CMake 3.22.1
+      run: |
+        wget https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.sh
+        sudo bash cmake-3.22.1-linux-x86_64.sh --prefix=/usr/local --exclude-subdir
+    - name: Clone sbpl repository
+      run: git clone https://github.com/sbpl/sbpl.git
+    - name: Build and test sbpl
+      uses: jrl-umi3218/github-actions/build-cmake-project@master
+      with:
+        compiler: ${{ matrix.compiler }}
+        build-type: ${{ matrix.build-type }}
+        project-dir: sbpl
+    - name: Build and test baseline_footstep_planner
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
