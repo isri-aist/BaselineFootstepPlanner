@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install clang-format-14
         run: |
           sudo apt-get -qq update
@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04]
+        os: [ubuntu-22.04, ubuntu-24.04]
         build-type: [Debug, RelWithDebInfo]
     runs-on: ${{ matrix.os }}
     steps:
@@ -47,24 +47,14 @@ jobs:
           else
             echo "UPLOAD_DOCUMENTATION=false" >> $GITHUB_ENV
           fi
-      - name: Install ROS
+      - name: Install dependencies
         uses: jrl-umi3218/github-actions/install-dependencies@master
         with:
           build-type: ${{ matrix.build-type }}
           ros: |
-            apt: ros-base
-      - name: Install CMake 3.22.1
-        run: |
-          wget https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1-linux-x86_64.sh
-          sudo bash cmake-3.22.1-linux-x86_64.sh --prefix=/usr/local --exclude-subdir
-      - name: Clone SBPL repository
-        run: git clone https://github.com/sbpl/sbpl.git
-      - name: Build and test SBPL
-        uses: jrl-umi3218/github-actions/build-cmake-project@master
-        with:
-          compiler: ${{ matrix.compiler }}
-          build-type: ${{ matrix.build-type }}
-          project-dir: sbpl
+            apt: ros-base sbpl
+          ubuntu: |
+            apt: cmake
       - name: Colcon build baseline_footstep_planner
         uses: jrl-umi3218/github-actions/build-colcon-project@master
         with:
@@ -87,7 +77,7 @@ jobs:
           rm -rf cmake/
           git checkout --quiet gh-pages
           rm -rf doxygen/
-          cp -r ${GITHUB_WORKSPACE}/colcon_ws/build/baseline_footstep_planner/doc/doxygen-html/ doxygen
+          cp -r ${GITHUB_WORKSPACE}/colcon_ws/build/baseline_footstep_planner/doc/html/ doxygen
           git add doxygen
           git_status=`git status -s`
           if test -n "$git_status"; then
