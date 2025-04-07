@@ -1,8 +1,9 @@
 /* Author: Masaki Murooka */
 
+#include <cmath>
+
 #include <BaselineFootstepPlanner/FootstepState.h>
 #include <BaselineFootstepPlanner/console.h>
-#include <cmath>
 
 using namespace BFP;
 
