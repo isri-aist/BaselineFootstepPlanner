@@ -40,7 +40,7 @@ jobs:
           if [ "${{ matrix.os }}" == "ubuntu-22.04" ] && \
              [ "${{ matrix.build-type }}" == "RelWithDebInfo" ] && \
              [ "${{ github.repository_owner }}" == "isri-aist" ] && \
-             [ "${{ github.ref }}" == "refs/heads/feature/master" ]
+             [ "${{ github.ref }}" == "refs/heads/master" ]
           then
             echo "UPLOAD_DOCUMENTATION=true" >> $GITHUB_ENV
             sudo apt-get install -qq doxygen graphviz
