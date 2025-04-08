@@ -79,7 +79,7 @@ jobs:
           rm -rf cmake/
           git checkout --quiet gh-pages
           rm -rf doxygen/
-          cp -r ${GITHUB_WORKSPACE}/colcon_ws/build/baseline_footstep_planner/doc/html/ doxygen
+          cp -r ${GITHUB_WORKSPACE}/colcon_ws/build/baseline_footstep_planner/doc/doxygen-html/ doxygen
           git add doxygen
           git_status=`git status -s`
           if test -n "$git_status"; then
