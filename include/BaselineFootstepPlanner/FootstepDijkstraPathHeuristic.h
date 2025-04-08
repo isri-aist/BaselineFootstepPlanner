@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include <array>
 #include <sbpl/headers.h>
 
 namespace BFP

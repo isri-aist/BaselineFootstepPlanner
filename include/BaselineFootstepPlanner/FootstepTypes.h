@@ -1,6 +1,7 @@
 /* Author: Masaki Murooka */
 
 #pragma once
+#include <string>
 
 #include <string>
 

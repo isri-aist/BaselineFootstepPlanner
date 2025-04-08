@@ -1,4 +1,4 @@
-if(DEFINED CATKIN_DEVEL_PREFIX)
+if(USE_ROS2)
   set(ROS_DEPENDENT_SRCS FootstepEnvConfigRos.cpp)
 else()
   set(ROS_DEPENDENT_SRCS "")
@@ -10,15 +10,16 @@ add_library(BaselineFootstepPlanner
   FootstepPlanner.cpp
   ${ROS_DEPENDENT_SRCS}
 )
-if(DEFINED CATKIN_DEVEL_PREFIX)
+if(USE_ROS2)
   target_include_directories(BaselineFootstepPlanner PUBLIC
-    ${catkin_INCLUDE_DIRS}
+    ${ament_INCLUDE_DIRS}
     )
-  target_link_libraries(BaselineFootstepPlanner PUBLIC
-    ${catkin_LIBRARIES}
-    )
-  add_dependencies(BaselineFootstepPlanner
-    ${${PROJECT_NAME}_EXPORTED_TARGETS})
+  ament_target_dependencies(BaselineFootstepPlanner PUBLIC
+    rclcpp
+    std_msgs
+    geometry_msgs
+    sensor_msgs
+  )
 else()
   target_compile_definitions(BaselineFootstepPlanner PUBLIC BFP_STANDALONE)
 endif()
@@ -26,6 +27,13 @@ target_include_directories(BaselineFootstepPlanner PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
+
+if(USE_ROS2)
+  rosidl_get_typesupport_target(cpp_typesupport_target 
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+  target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target} ${ament_LIBRARIES})
+endif()
+
 target_link_libraries(BaselineFootstepPlanner PUBLIC PkgConfig::SBPL)
 target_compile_features(BaselineFootstepPlanner PUBLIC cxx_std_17)
 
@@ -40,3 +48,7 @@ install(TARGETS BaselineFootstepPlanner
           RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 )
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/BaselineFootstepPlanner DESTINATION "${INCLUDE_INSTALL_DIR}")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/launch/ DESTINATION share/${PROJECT_NAME}/launch)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/rviz/ DESTINATION share/${PROJECT_NAME}/rviz)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/config/ DESTINATION share/${PROJECT_NAME}/config)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/scripts/ DESTINATION lib/${PROJECT_NAME})

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include <geometry_msgs/Pose2D.h>
-#include <ros/ros.h>
+#include <geometry_msgs/msg/pose2_d.hpp>
+#include <rclcpp/rclcpp.hpp>
 
 #include <BaselineFootstepPlanner/FootstepPlanner.h>
 
@@ -33,10 +33,10 @@ protected:
   void publishEmptyPath();
 
   /** \brief Callback for start pose. */
-  void startPoseCallback(const geometry_msgs::Pose2D::ConstPtr & pose_msg);
+  void startPoseCallback(const geometry_msgs::msg::Pose2D::SharedPtr pose_msg);
 
   /** \brief Callback for goal pose. */
-  void goalPoseCallback(const geometry_msgs::Pose2D::ConstPtr & pose_msg);
+  void goalPoseCallback(const geometry_msgs::msg::Pose2D::SharedPtr pose_msg);
 
 protected:
   //! Footstep planner
@@ -52,21 +52,18 @@ protected:
   double accumulated_duration_ = 0.0;
 
   //! ROS node handle
-  ros::NodeHandle nh_;
-
-  //! ROS node handle with private namespace
-  ros::NodeHandle pnh_ = ros::NodeHandle("~");
+  std::shared_ptr<rclcpp::Node> nh_ = rclcpp::Node::make_shared("footstep_planner");
 
   //! Publisher of footstep sequence
-  ros::Publisher footstep_seq_pub_;
+  rclcpp::Publisher<baseline_footstep_planner::msg::FootstepSequence2DStamped>::SharedPtr footstep_seq_pub_;
 
   //! Publisher of expanded states
-  ros::Publisher expanded_states_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::PointCloud>::SharedPtr expanded_states_pub_;
 
   //! Subscriber of start pose
-  ros::Subscriber start_pose_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr start_pose_sub_;
 
   //! Subscriber of goal pose
-  ros::Subscriber goal_pose_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::Pose2D>::SharedPtr goal_pose_sub_;
 };
 } // namespace BFP

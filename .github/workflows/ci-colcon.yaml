@@ -1,0 +1,90 @@
+name: CI of BaselineFootstepPlanner (colcon)
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+
+  clang-format:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+      - name: Install clang-format-14
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install clang-format-14
+      - name: Run clang-format-check
+        run: |
+          ./.clang-format-check.sh
+
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
+        build-type: [Debug, RelWithDebInfo]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup environment variables
+        run: |
+          set -e
+          set -x
+          if [ "${{ matrix.os }}" == "ubuntu-22.04" ] && \
+             [ "${{ matrix.build-type }}" == "RelWithDebInfo" ] && \
+             [ "${{ github.repository_owner }}" == "isri-aist" ] && \
+             [ "${{ github.ref }}" == "refs/heads/master" ]
+          then
+            echo "UPLOAD_DOCUMENTATION=true" >> $GITHUB_ENV
+            sudo apt-get install -qq doxygen graphviz
+          else
+            echo "UPLOAD_DOCUMENTATION=false" >> $GITHUB_ENV
+          fi
+      - name: Install dependencies
+        uses: jrl-umi3218/github-actions/install-dependencies@master
+        with:
+          build-type: ${{ matrix.build-type }}
+          ros: |
+            apt: ros-base
+          ubuntu: |
+            apt: cmake
+          github: |
+            - path: sbpl/sbpl
+      - name: Colcon build baseline_footstep_planner
+        uses: jrl-umi3218/github-actions/build-colcon-project@master
+        with:
+          build-type: ${{ matrix.build-type }}
+          cmake-args: -DOPTIMIZE_FOR_NATIVE=${{ matrix.optimize-for-native }} -DINSTALL_DOCUMENTATION=${{ env.UPLOAD_DOCUMENTATION }} -DUSE_ROS2=ON
+          build-packages: baseline_footstep_planner
+          test-packages: baseline_footstep_planner
+      - name: Upload documentation
+        # Only run for one configuration and on origin master branch
+        if: env.UPLOAD_DOCUMENTATION == 'true'        
+        run: |
+          set -e
+          set -x
+          cd ${GITHUB_WORKSPACE}/colcon_ws/src/${{ github.repository }}
+          git config --global user.name "Masaki Murooka"
+          git config --global user.email "m-murooka@aist.go.jp"
+          git remote set-url origin "https://mmurooka:${{ secrets.CI_TOKEN }}@github.com/isri-aist/BaselineFootstepPlanner"
+          git fetch --depth=1 origin gh-pages:gh-pages
+          git clean -dfx
+          rm -rf cmake/
+          git checkout --quiet gh-pages
+          rm -rf doxygen/
+          cp -r ${GITHUB_WORKSPACE}/colcon_ws/build/baseline_footstep_planner/doc/html/ doxygen
+          git add doxygen
+          git_status=`git status -s`
+          if test -n "$git_status"; then
+            git commit --quiet -m "Update Doxygen HTML files from commit ${{ github.sha }}"
+            git push origin gh-pages
+          else
+            echo "Github pages documentation is already up-to-date."
+          fi
