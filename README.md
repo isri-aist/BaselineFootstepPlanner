@@ -1,4 +1,4 @@
-This is the branch for ROS2; use the [ros1](https://github.com/isri-aist/BaselineFootstepPlanner/tree/ros1) branch for ROS1.
+**This is the branch for ROS2; use the [ros1](https://github.com/isri-aist/BaselineFootstepPlanner/tree/ros1) branch for ROS1.**
 
 # [BaselineFootstepPlanner](https://github.com/isri-aist/BaselineFootstepPlanner)
 Humanoid footstep planner based on baseline methods with graph search
