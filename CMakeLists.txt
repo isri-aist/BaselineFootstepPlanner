@@ -12,8 +12,6 @@ set(CXX_DISABLE_WERROR ON)
 option(INSTALL_DOCUMENTATION "Generate and install the documentation" OFF)
 option(USE_ROS2 "Use ROS2" OFF)
 
-include(cmake/base.cmake)
-
 project(${PROJECT_NAME} LANGUAGES CXX C)
 
 if(USE_ROS2)
@@ -65,7 +63,6 @@ endif()
 
 if(USE_ROS2)
   ament_export_dependencies(rclcpp rosidl_default_runtime std_msgs geometry_msgs sensor_msgs SBPL)
-  ament_export_include_directories(include)
-  ament_export_libraries(BaselineFootstepPlanner)
+  ament_export_targets("${TARGETS_EXPORT_NAME}")
   ament_package()
 endif()
