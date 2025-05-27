@@ -34,7 +34,7 @@ if(USE_ROS2)
   target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target} ${ament_LIBRARIES})
 endif()
 
-target_link_libraries(BaselineFootstepPlanner PUBLIC PkgConfig::SBPL)
+target_link_libraries(BaselineFootstepPlanner PUBLIC ${SBPL_LIBRARIES})
 target_compile_features(BaselineFootstepPlanner PUBLIC cxx_std_17)
 
 if(BUILD_SHARED_LIBS)

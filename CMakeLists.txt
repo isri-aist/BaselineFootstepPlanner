@@ -27,22 +27,13 @@ endif()
 
 # SBPL
 find_package(PkgConfig)
-pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)
-if(NOT USE_ROS2)
-  set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
-find_package(PkgConfig)
-pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)")
-endif()
+pkg_check_modules(SBPL REQUIRED sbpl)
 
 if(USE_ROS2)
-  set(msg_files
+  rosidl_generate_interfaces(${PROJECT_NAME}
     "msg/Footstep2D.msg"
     "msg/FootstepSequence2D.msg"
     "msg/FootstepSequence2DStamped.msg"
-  ) 
-
-  rosidl_generate_interfaces(${PROJECT_NAME}
-    ${msg_files}
     DEPENDENCIES std_msgs geometry_msgs
   )
 endif()
