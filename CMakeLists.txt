@@ -54,6 +54,7 @@ endif()
 
 if(USE_ROS2)
   ament_export_dependencies(rclcpp rosidl_default_runtime std_msgs geometry_msgs sensor_msgs SBPL)
+  ament_export_include_directories(include)
   ament_export_targets("${TARGETS_EXPORT_NAME}")
   ament_package()
 endif()
