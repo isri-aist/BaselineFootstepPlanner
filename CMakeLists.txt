@@ -27,7 +27,7 @@ endif()
 
 # SBPL
 find_package(PkgConfig)
-pkg_check_modules(SBPL REQUIRED sbpl)
+pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)
 
 if(USE_ROS2)
   rosidl_generate_interfaces(${PROJECT_NAME}
