@@ -26,8 +26,8 @@ else()
 endif()
 
 # SBPL
-find_package(PkgConfig)
-pkg_check_modules(SBPL REQUIRED IMPORTED_TARGET sbpl)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SBPL REQUIRED sbpl)
 
 if(USE_ROS2)
   rosidl_generate_interfaces(${PROJECT_NAME}
@@ -35,6 +35,10 @@ if(USE_ROS2)
     "msg/FootstepSequence2D.msg"
     "msg/FootstepSequence2DStamped.msg"
     DEPENDENCIES std_msgs geometry_msgs
+  )
+
+  rosidl_get_typesupport_target(cpp_typesupport_target 
+    ${PROJECT_NAME} "rosidl_typesupport_cpp"
   )
 endif()
 
@@ -55,6 +59,6 @@ endif()
 if(USE_ROS2)
   ament_export_dependencies(rclcpp rosidl_default_runtime std_msgs geometry_msgs sensor_msgs SBPL)
   ament_export_include_directories(include)
-  ament_export_targets("${TARGETS_EXPORT_NAME}")
+  ament_export_targets(${PROJECT_NAME} HAS_LIBRARY_TARGET)
   ament_package()
 endif()

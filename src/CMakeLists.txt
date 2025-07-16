@@ -11,15 +11,14 @@ add_library(BaselineFootstepPlanner
   ${ROS_DEPENDENT_SRCS}
 )
 if(USE_ROS2)
-  target_include_directories(BaselineFootstepPlanner PUBLIC
-    ${ament_INCLUDE_DIRS}
-    )
   ament_target_dependencies(BaselineFootstepPlanner PUBLIC
     rclcpp
     std_msgs
     geometry_msgs
     sensor_msgs
   )
+
+  target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target})
 else()
   target_compile_definitions(BaselineFootstepPlanner PUBLIC BFP_STANDALONE)
 endif()
@@ -28,13 +27,7 @@ target_include_directories(BaselineFootstepPlanner PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-if(USE_ROS2)
-  rosidl_get_typesupport_target(cpp_typesupport_target 
-  ${PROJECT_NAME} "rosidl_typesupport_cpp")
-  target_link_libraries(BaselineFootstepPlanner PUBLIC ${cpp_typesupport_target} ${ament_LIBRARIES})
-endif()
-
-target_link_libraries(BaselineFootstepPlanner PUBLIC PkgConfig::SBPL)
+target_link_libraries(BaselineFootstepPlanner PUBLIC ${SBPL_LIBRARIES})
 target_compile_features(BaselineFootstepPlanner PUBLIC cxx_std_17)
 
 if(BUILD_SHARED_LIBS)
@@ -42,11 +35,12 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 install(TARGETS BaselineFootstepPlanner
-          EXPORT "${TARGETS_EXPORT_NAME}"
-          LIBRARY DESTINATION lib
-          ARCHIVE DESTINATION lib
-          RUNTIME DESTINATION bin
+  EXPORT ${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
 )
+
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/BaselineFootstepPlanner DESTINATION include)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/launch/ DESTINATION share/${PROJECT_NAME}/launch)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/rviz/ DESTINATION share/${PROJECT_NAME}/rviz)
