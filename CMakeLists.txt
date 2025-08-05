@@ -28,6 +28,7 @@ endif()
 # SBPL
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SBPL REQUIRED sbpl)
+include_directories(${SBPL_INCLUDE_DIRS})
 
 if(USE_ROS2)
   rosidl_generate_interfaces(${PROJECT_NAME}

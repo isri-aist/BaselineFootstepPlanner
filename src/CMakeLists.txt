@@ -27,6 +27,7 @@ target_include_directories(BaselineFootstepPlanner PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
+target_link_directories(BaselineFootstepPlanner PUBLIC ${SBPL_LIBRARY_DIRS})
 target_link_libraries(BaselineFootstepPlanner PUBLIC ${SBPL_LIBRARIES})
 target_compile_features(BaselineFootstepPlanner PUBLIC cxx_std_17)
 
