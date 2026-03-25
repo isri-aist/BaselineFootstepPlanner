@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.24)
 
 set(PROJECT_NAME baseline_footstep_planner)
 set(PROJECT_GENERATED_HEADERS_SKIP_DEPRECATED ON)
@@ -12,6 +12,7 @@ set(CXX_DISABLE_WERROR ON)
 option(INSTALL_DOCUMENTATION "Generate and install the documentation" OFF)
 option(USE_ROS2 "Use ROS2" OFF)
 
+include(cmake/base.cmake)
 project(${PROJECT_NAME} LANGUAGES CXX C)
 
 if(USE_ROS2)
